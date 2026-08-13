@@ -1,0 +1,15 @@
+# Overview {.unnumbered}
+
+This contains small projects that I have worked on to learn python. It is mainly to be used as a reference for common python concepts and syntax. 
+
+::: callout-note
+## Quarto blog publish details
+
+This book was created using [Quarto](https://quarto.org/) and published with Github Pages.
+:::
+
+::: callout-tip
+## Github repository for code
+
+You can find the code to reproduce this project at [coltongearhart/learning-python](https://github.com/coltongearhart/learning-python).
+:::

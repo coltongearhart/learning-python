@@ -1,0 +1,185 @@
+# Gradebook 
+
+### Import modules
+
+```{python}
+
+# ---------------------------------------
+# import modules
+# ---------------------------------------
+import random
+import statistics
+import string
+from collections import Counter
+from pprint import pp
+
+import numpy as np
+
+```
+
+### Generate gradebook
+
+```{python}
+
+# ---------------------------------------
+# generate gradebook
+# ---------------------------------------
+# get class names (not hardcoding for extra practice)
+classes = [f"math125-00{section}" for section in range(1, 4)]
+classes.append("math320-001")
+# randomly generate students and grades data
+data_grades = {}
+for cls in classes:
+    n_students = random.randint(a=10, b=25)
+    names = [
+        "".join(random.choices(population=string.ascii_uppercase, k=2))
+        for _ in range(n_students)
+    ]
+    grades = np.round(
+        np.random.normal(loc=random.randint(a=70, b=80), scale=5, size=n_students), 1
+    )
+    data_grades[cls] = dict(zip(names, grades))
+
+# view gradebook
+pp(data_grades)
+
+```
+
+### Analyze gradebook
+
+```{python}
+
+# ---------------------------------------
+# analyze gradebook
+# ---------------------------------------
+# define functions
+def print_class(grades, cls):
+    """Print the grades of each student in the class."""
+    pp(grades[cls])
+
+
+def calc_avg(grades, cls=None):
+    """Calculate the average grade for a(all) class(es)."""
+    if cls is None:
+        mean = {}
+        for cls_i in grades:
+            mean[cls_i] = round(statistics.mean(grades[cls_i].values()), 2)
+    else:
+        mean = round(statistics.mean(grades[cls].values()), 2)
+    return mean
+
+
+def calc_min_max(grades, cls=None):
+    """Calculate the min and max grades for a(all) class(es)."""
+    if cls is None:
+        minmax = {}
+        for cls_i in grades:
+            minmax[cls_i] = [min(grades[cls_i].values()), max(grades[cls_i].values())]
+    else:
+        minmax = [min(grades[cls].values()), max(grades[cls].values())]
+    return minmax
+
+
+def grade_to_letter(grade):
+    """Calculate the letter grade corresponding to the numeric grade."""
+    if grade >= 90:
+        return "A"
+    elif grade >= 80:
+        return "B"
+    elif grade >= 70:
+        return "C"
+    elif grade >= 60:
+        return "D"
+    else:
+        return "F"
+
+
+def count_grades(letters):
+    """Count the distribution of letter grades for a(all) class(es)."""
+    return sorted(Counter(letters).items())
+
+
+def letter_grades(grades, cls=None):
+    """Calculate the of letter grades for a(all) class(es)."""
+    if cls is None:
+        letters = {}
+        for cls_i in grades:
+            letters[cls_i] = [grade_to_letter(grd) for grd in grades[cls_i].values()]
+    else:
+        letters = []
+        for grd in grades[cls].values():
+            letters.append(grade_to_letter(grd))
+    return letters
+
+
+def letter_distribution(grades, cls=None):
+    """Calculate the distribution of letter grades for a(all) class(es)."""
+    letters = letter_grades(grades, cls)
+
+    if cls is None:
+        counts = {}
+        for cls_i in letters:
+            counts[cls_i] = count_grades(letters[cls_i])
+    else:
+        counts = count_grades(letters)
+    return counts
+
+```
+
+```{python}
+
+# analyze grades (i.e. test functions)
+print_class(data_grades, classes[0])
+
+```
+
+```{python}
+
+calc_avg(data_grades, classes[0])
+
+```
+
+```{python}
+
+calc_avg(data_grades)
+
+```
+
+```{python}
+
+calc_min_max(data_grades, classes[0])
+
+```
+
+```{python}
+
+calc_min_max(data_grades)
+
+```
+
+```{python}
+
+letter_grades(data_grades, classes[0])
+
+```
+
+```{python}
+
+letter_grades(data_grades)
+
+```
+
+```{python}
+
+letter_distribution(data_grades, classes[0])
+
+```
+
+```{python}
+
+letter_distribution(data_grades)
+
+```
+
+
+
