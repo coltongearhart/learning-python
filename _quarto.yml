@@ -19,8 +19,8 @@ format:
     code-link: true
     #code-fold: show
     code-tools: true
-    number-depth: 3
-    toc-depth: 4
+    number-depth: 2
+    toc-depth: 3
     code-block-border-left: "#2C3E50"
     highlight-style: github
     grid:
