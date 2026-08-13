@@ -1,6 +1,6 @@
 # Gradebook 
 
-### Import modules
+#### Import modules
 
 ```{python}
 
@@ -17,7 +17,7 @@ import numpy as np
 
 ```
 
-### Generate gradebook
+#### Generate gradebook
 
 ```{python}
 
@@ -45,7 +45,7 @@ pp(data_grades)
 
 ```
 
-### Analyze gradebook
+#### Analyze gradebook
 
 ```{python}
 

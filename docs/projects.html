@@ -182,9 +182,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#import-modules" id="toc-import-modules" class="nav-link active" data-scroll-target="#import-modules"><span class="header-section-number">1.0.1</span> Import modules</a></li>
-  <li><a href="#generate-gradebook" id="toc-generate-gradebook" class="nav-link" data-scroll-target="#generate-gradebook"><span class="header-section-number">1.0.2</span> Generate gradebook</a></li>
-  <li><a href="#analyze-gradebook" id="toc-analyze-gradebook" class="nav-link" data-scroll-target="#analyze-gradebook"><span class="header-section-number">1.0.3</span> Analyze gradebook</a></li>
+  <li><a href="#import-modules" id="toc-import-modules" class="nav-link active" data-scroll-target="#import-modules">Import modules</a></li>
+  <li><a href="#generate-gradebook" id="toc-generate-gradebook" class="nav-link" data-scroll-target="#generate-gradebook">Generate gradebook</a></li>
+  <li><a href="#analyze-gradebook" id="toc-analyze-gradebook" class="nav-link" data-scroll-target="#analyze-gradebook">Analyze gradebook</a></li>
   </ul>
 </nav>
     </div>
@@ -195,9 +195,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="import-modules" class="level3" data-number="1.0.1">
-<h3 data-number="1.0.1" class="anchored" data-anchor-id="import-modules"><span class="header-section-number">1.0.1</span> Import modules</h3>
-<div id="612834d9" class="cell" data-execution_count="1">
+<section id="import-modules" class="level4">
+<h4 class="anchored" data-anchor-id="import-modules">Import modules</h4>
+<div id="7af6465b" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># import modules</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
@@ -210,9 +210,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="generate-gradebook" class="level3" data-number="1.0.2">
-<h3 data-number="1.0.2" class="anchored" data-anchor-id="generate-gradebook"><span class="header-section-number">1.0.2</span> Generate gradebook</h3>
-<div id="fb3c3055" class="cell" data-execution_count="2">
+<section id="generate-gradebook" class="level4">
+<h4 class="anchored" data-anchor-id="generate-gradebook">Generate gradebook</h4>
+<div id="34ce6a33" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># generate gradebook</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
@@ -235,75 +235,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># view gradebook</span></span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>pp(data_grades)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>{'math125-001': {'JH': np.float64(62.3),
-                 'TM': np.float64(61.4),
-                 'HD': np.float64(69.0),
-                 'JA': np.float64(66.9),
-                 'NH': np.float64(73.1),
-                 'UW': np.float64(63.6),
-                 'FJ': np.float64(69.6),
-                 'YW': np.float64(63.5),
-                 'DQ': np.float64(71.8),
-                 'FP': np.float64(66.7),
-                 'HZ': np.float64(68.8),
-                 'MQ': np.float64(68.8),
-                 'WT': np.float64(75.8),
-                 'JO': np.float64(67.9),
-                 'SG': np.float64(82.5),
-                 'KM': np.float64(70.3),
-                 'IQ': np.float64(72.6),
-                 'UH': np.float64(72.1),
-                 'IF': np.float64(69.7),
-                 'VQ': np.float64(67.4),
-                 'RO': np.float64(61.5),
-                 'WA': np.float64(57.3)},
- 'math125-002': {'BK': np.float64(73.6),
-                 'IU': np.float64(79.4),
-                 'UM': np.float64(75.0),
-                 'LL': np.float64(74.7),
-                 'UP': np.float64(86.6),
-                 'SG': np.float64(78.5),
-                 'LV': np.float64(70.0),
-                 'PV': np.float64(86.7),
-                 'AH': np.float64(80.8),
-                 'RM': np.float64(67.5),
-                 'WC': np.float64(73.5),
-                 'BI': np.float64(69.1),
-                 'WD': np.float64(72.8),
-                 'DK': np.float64(71.7),
-                 'YZ': np.float64(68.8),
-                 'RW': np.float64(73.2),
-                 'RK': np.float64(67.8)},
- 'math125-003': {'BO': np.float64(82.1),
-                 'YZ': np.float64(80.7),
-                 'YL': np.float64(78.8),
-                 'MJ': np.float64(76.1),
-                 'MZ': np.float64(73.3),
-                 'XE': np.float64(79.6),
-                 'RX': np.float64(79.2),
-                 'ZF': np.float64(81.4),
-                 'LK': np.float64(86.1),
-                 'XD': np.float64(83.1)},
- 'math320-001': {'KI': np.float64(84.0),
-                 'PT': np.float64(77.0),
-                 'UB': np.float64(73.7),
-                 'IZ': np.float64(66.5),
-                 'TN': np.float64(65.3),
-                 'MG': np.float64(78.5),
-                 'BB': np.float64(67.8),
-                 'BR': np.float64(77.5),
-                 'NU': np.float64(80.6),
-                 'JM': np.float64(73.4),
-                 'MO': np.float64(82.4),
-                 'HX': np.float64(78.2),
-                 'OZ': np.float64(78.8),
-                 'PP': np.float64(77.1)}}</code></pre>
+<pre><code>{'math125-001': {'SS': np.float64(72.8),
+                 'DZ': np.float64(78.7),
+                 'SZ': np.float64(74.6),
+                 'JI': np.float64(78.0),
+                 'RK': np.float64(82.7),
+                 'FY': np.float64(81.1),
+                 'OP': np.float64(77.6),
+                 'JE': np.float64(76.6),
+                 'CM': np.float64(71.5),
+                 'IN': np.float64(72.7),
+                 'GG': np.float64(87.8)},
+ 'math125-002': {'VH': np.float64(79.8),
+                 'BP': np.float64(80.0),
+                 'EX': np.float64(80.0),
+                 'OP': np.float64(76.8),
+                 'UB': np.float64(70.4),
+                 'TU': np.float64(74.8),
+                 'JP': np.float64(72.7),
+                 'JL': np.float64(73.5),
+                 'KU': np.float64(71.5),
+                 'HJ': np.float64(74.5),
+                 'GM': np.float64(79.2),
+                 'JQ': np.float64(86.1),
+                 'AB': np.float64(76.7),
+                 'QX': np.float64(79.4),
+                 'SF': np.float64(86.6),
+                 'WB': np.float64(82.3),
+                 'UJ': np.float64(73.5),
+                 'EA': np.float64(81.0),
+                 'IF': np.float64(73.4),
+                 'KL': np.float64(75.2),
+                 'XH': np.float64(74.8),
+                 'FH': np.float64(69.3)},
+ 'math125-003': {'ZP': np.float64(67.5),
+                 'LE': np.float64(74.8),
+                 'KF': np.float64(66.6),
+                 'QJ': np.float64(72.7),
+                 'RL': np.float64(66.4),
+                 'BJ': np.float64(72.1),
+                 'PQ': np.float64(74.0),
+                 'AV': np.float64(75.9),
+                 'SF': np.float64(75.5),
+                 'VR': np.float64(67.0),
+                 'BS': np.float64(70.5),
+                 'NW': np.float64(71.5),
+                 'MV': np.float64(75.4),
+                 'KY': np.float64(73.0),
+                 'RH': np.float64(77.0),
+                 'LV': np.float64(75.1),
+                 'XK': np.float64(72.9),
+                 'WU': np.float64(59.0),
+                 'ED': np.float64(76.8)},
+ 'math320-001': {'VG': np.float64(77.0),
+                 'MY': np.float64(80.3),
+                 'CG': np.float64(79.8),
+                 'ER': np.float64(81.9),
+                 'SJ': np.float64(84.6),
+                 'TA': np.float64(77.9),
+                 'CV': np.float64(79.0),
+                 'LD': np.float64(86.4),
+                 'MF': np.float64(79.5),
+                 'KN': np.float64(78.4)}}</code></pre>
 </div>
 </div>
 </section>
-<section id="analyze-gradebook" class="level3" data-number="1.0.3">
-<h3 data-number="1.0.3" class="anchored" data-anchor-id="analyze-gradebook"><span class="header-section-number">1.0.3</span> Analyze gradebook</h3>
-<div id="24a1b668" class="cell" data-execution_count="3">
+<section id="analyze-gradebook" class="level4">
+<h4 class="anchored" data-anchor-id="analyze-gradebook">Analyze gradebook</h4>
+<div id="0b5039d4" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># analyze gradebook</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
@@ -379,117 +378,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>        counts <span class="op">=</span> count_grades(letters)</span>
 <span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> counts</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="abd3c742" class="cell" data-execution_count="4">
+<div id="a2caf854" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># analyze grades (i.e. test functions)</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>print_class(data_grades, classes[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>{'JH': np.float64(62.3),
- 'TM': np.float64(61.4),
- 'HD': np.float64(69.0),
- 'JA': np.float64(66.9),
- 'NH': np.float64(73.1),
- 'UW': np.float64(63.6),
- 'FJ': np.float64(69.6),
- 'YW': np.float64(63.5),
- 'DQ': np.float64(71.8),
- 'FP': np.float64(66.7),
- 'HZ': np.float64(68.8),
- 'MQ': np.float64(68.8),
- 'WT': np.float64(75.8),
- 'JO': np.float64(67.9),
- 'SG': np.float64(82.5),
- 'KM': np.float64(70.3),
- 'IQ': np.float64(72.6),
- 'UH': np.float64(72.1),
- 'IF': np.float64(69.7),
- 'VQ': np.float64(67.4),
- 'RO': np.float64(61.5),
- 'WA': np.float64(57.3)}</code></pre>
+<pre><code>{'SS': np.float64(72.8),
+ 'DZ': np.float64(78.7),
+ 'SZ': np.float64(74.6),
+ 'JI': np.float64(78.0),
+ 'RK': np.float64(82.7),
+ 'FY': np.float64(81.1),
+ 'OP': np.float64(77.6),
+ 'JE': np.float64(76.6),
+ 'CM': np.float64(71.5),
+ 'IN': np.float64(72.7),
+ 'GG': np.float64(87.8)}</code></pre>
 </div>
 </div>
-<div id="19a4ceaa" class="cell" data-execution_count="5">
+<div id="d279a6b1" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>calc_avg(data_grades, classes[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="33">
-<pre><code>np.float64(68.3)</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>np.float64(77.65)</code></pre>
 </div>
 </div>
-<div id="6cb7a078" class="cell" data-execution_count="6">
+<div id="9bb82e8d" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>calc_avg(data_grades)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="34">
-<pre><code>{'math125-001': np.float64(68.3),
- 'math125-002': np.float64(74.69),
- 'math125-003': np.float64(80.04),
- 'math320-001': np.float64(75.77)}</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>{'math125-001': np.float64(77.65),
+ 'math125-002': np.float64(76.89),
+ 'math125-003': np.float64(71.77),
+ 'math320-001': np.float64(80.48)}</code></pre>
 </div>
 </div>
-<div id="b6036b97" class="cell" data-execution_count="7">
+<div id="58c5e366" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>calc_min_max(data_grades, classes[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="35">
-<pre><code>[np.float64(57.3), np.float64(82.5)]</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>[np.float64(71.5), np.float64(87.8)]</code></pre>
 </div>
 </div>
-<div id="4d08a6fa" class="cell" data-execution_count="8">
+<div id="6993f4f2" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>calc_min_max(data_grades)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="36">
-<pre><code>{'math125-001': [np.float64(57.3), np.float64(82.5)],
- 'math125-002': [np.float64(67.5), np.float64(86.7)],
- 'math125-003': [np.float64(73.3), np.float64(86.1)],
- 'math320-001': [np.float64(65.3), np.float64(84.0)]}</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>{'math125-001': [np.float64(71.5), np.float64(87.8)],
+ 'math125-002': [np.float64(69.3), np.float64(86.6)],
+ 'math125-003': [np.float64(59.0), np.float64(77.0)],
+ 'math320-001': [np.float64(77.0), np.float64(86.4)]}</code></pre>
 </div>
 </div>
-<div id="dc170fff" class="cell" data-execution_count="9">
+<div id="65614d57" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>letter_grades(data_grades, classes[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="37">
-<pre><code>['D',
- 'D',
- 'D',
- 'D',
- 'C',
- 'D',
- 'D',
- 'D',
- 'C',
- 'D',
- 'D',
- 'D',
- 'C',
- 'D',
- 'B',
- 'C',
- 'C',
- 'C',
- 'D',
- 'D',
- 'D',
- 'F']</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>['C', 'C', 'C', 'C', 'B', 'B', 'C', 'C', 'C', 'C', 'B']</code></pre>
 </div>
 </div>
-<div id="096453a7" class="cell" data-execution_count="10">
+<div id="e1f1aa3e" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>letter_grades(data_grades)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="38">
-<pre><code>{'math125-001': ['D',
-  'D',
-  'D',
-  'D',
-  'C',
-  'D',
-  'D',
-  'D',
-  'C',
-  'D',
-  'D',
-  'D',
-  'C',
-  'D',
-  'B',
-  'C',
-  'C',
-  'C',
-  'D',
-  'D',
-  'D',
-  'F'],
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>{'math125-001': ['C', 'C', 'C', 'C', 'B', 'B', 'C', 'C', 'C', 'C', 'B'],
  'math125-002': ['C',
+  'B',
+  'B',
+  'C',
+  'C',
+  'C',
+  'C',
+  'C',
   'C',
   'C',
   'C',
@@ -498,44 +451,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   'C',
   'B',
   'B',
-  'D',
   'C',
-  'D',
+  'B',
   'C',
   'C',
-  'D',
   'C',
   'D'],
- 'math125-003': ['B', 'B', 'C', 'C', 'C', 'C', 'C', 'B', 'B', 'B'],
- 'math320-001': ['B',
+ 'math125-003': ['D',
   'C',
-  'C',
-  'D',
   'D',
   'C',
   'D',
   'C',
-  'B',
-  'C',
-  'B',
   'C',
   'C',
-  'C']}</code></pre>
+  'C',
+  'D',
+  'C',
+  'C',
+  'C',
+  'C',
+  'C',
+  'C',
+  'C',
+  'F',
+  'C'],
+ 'math320-001': ['C', 'B', 'C', 'B', 'B', 'C', 'C', 'B', 'C', 'C']}</code></pre>
 </div>
 </div>
-<div id="a706c607" class="cell" data-execution_count="11">
+<div id="90da95d4" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>letter_distribution(data_grades, classes[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="39">
-<pre><code>[('B', 1), ('C', 6), ('D', 14), ('F', 1)]</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>[('B', 3), ('C', 8)]</code></pre>
 </div>
 </div>
-<div id="d724f08b" class="cell" data-execution_count="12">
+<div id="75916fee" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>letter_distribution(data_grades)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="40">
-<pre><code>{'math125-001': [('B', 1), ('C', 6), ('D', 14), ('F', 1)],
- 'math125-002': [('B', 3), ('C', 10), ('D', 4)],
- 'math125-003': [('B', 5), ('C', 5)],
- 'math320-001': [('B', 3), ('C', 8), ('D', 3)]}</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>{'math125-001': [('B', 3), ('C', 8)],
+ 'math125-002': [('B', 6), ('C', 15), ('D', 1)],
+ 'math125-003': [('C', 14), ('D', 4), ('F', 1)],
+ 'math320-001': [('B', 4), ('C', 6)]}</code></pre>
 </div>
 </div>
 
@@ -1007,7 +963,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Gradebook </span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">### Import modules</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Import modules</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
@@ -1023,7 +979,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="fu">### Generate gradebook</span></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Generate gradebook</span></span>
 <span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
 <span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
@@ -1050,7 +1006,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a><span class="fu">### Analyze gradebook</span></span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Analyze gradebook</span></span>
 <span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
 <span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
