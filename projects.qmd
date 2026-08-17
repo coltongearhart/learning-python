@@ -7,6 +7,7 @@
 # ---------------------------------------
 # import modules
 # ---------------------------------------
+import csv
 import random
 import statistics
 import string
@@ -17,66 +18,86 @@ import numpy as np
 
 ```
 
-### Generate gradebook
+### Module constants
 
 ```{python}
 
 # ---------------------------------------
-# generate gradebook
+# module constants
 # ---------------------------------------
-# get class names (not hardcoding for extra practice)
-classes = [f"math125-00{section}" for section in range(1, 4)]
-classes.append("math320-001")
-# randomly generate students and grades data
-data_grades = {}
-for cls in classes:
-    n_students = random.randint(a=10, b=25)
-    names = [
-        "".join(random.choices(population=string.ascii_uppercase, k=2))
-        for _ in range(n_students)
-    ]
-    grades = np.round(
-        np.random.normal(loc=random.randint(a=70, b=80), scale=5, size=n_students), 1
-    )
-    data_grades[cls] = dict(zip(names, grades))
+PASSWORD = "1234"
 
-# view gradebook
-pp(data_grades)
+MENU = """
+---------------------
+Gradebook Manager
+---------------------
+
+\nWhat would you like to do?
+
+Analysis
+1. Print class
+2. Class average
+3. Min / Max
+4. Summarize letter distribution
+
+\nModification
+5. Change grade
+6. Add student
+7. Remove student
+8. Add class
+
+\nFile
+9. Save gradebook
+10. Quit
+
+\nChoice: """
+
+MIN_GRADE = 0
+MAX_GRADE = 100
 
 ```
 
-### Analyze gradebook
+### Analysis functions
 
 ```{python}
 
 # ---------------------------------------
-# analyze gradebook
+# analysis functions
 # ---------------------------------------
-# define functions
-def print_class(grades, cls):
-    """Print the grades of each student in the class."""
-    pp(grades[cls])
-
-
-def calc_avg(grades, cls=None):
+def calc_avg(grades, class_name=None):
     """Calculate the average grade for a(all) class(es)."""
-    if cls is None:
+    if class_name is None or class_name == "":
         mean = {}
-        for cls_i in grades:
-            mean[cls_i] = round(statistics.mean(grades[cls_i].values()), 2)
+        for class_name_i in grades:
+            mean[class_name_i] = round(
+                statistics.mean(grades[class_name_i].values()), 2
+            )
+        print("Average grade calculated for all classes.")
+    elif class_name not in grades:
+        print(f"Class {class_name} not found.")
+        return
     else:
-        mean = round(statistics.mean(grades[cls].values()), 2)
+        mean = round(statistics.mean(grades[class_name].values()), 2)
+        print(f"Average grade calculated for class {class_name}.")
     return mean
 
 
-def calc_min_max(grades, cls=None):
+def calc_min_max(grades, class_name=None):
     """Calculate the min and max grades for a(all) class(es)."""
-    if cls is None:
+    if class_name is None or class_name == "":
         minmax = {}
-        for cls_i in grades:
-            minmax[cls_i] = [min(grades[cls_i].values()), max(grades[cls_i].values())]
+        for class_name_i in grades:
+            minmax[class_name_i] = [
+                min(grades[class_name_i].values()),
+                max(grades[class_name_i].values()),
+            ]
+        print("Min and max grades calculated for all classes.")
+    elif class_name not in grades:
+        print(f"Class {class_name} not found.")
+        return
     else:
-        minmax = [min(grades[cls].values()), max(grades[cls].values())]
+        minmax = [min(grades[class_name].values()), max(grades[class_name].values())]
+        print(f"Min and max grades calculated for class {class_name}.")
     return minmax
 
 
@@ -99,30 +120,282 @@ def count_grades(letters):
     return sorted(Counter(letters).items())
 
 
-def letter_grades(grades, cls=None):
+def letter_grades(grades, class_name=None):
     """Calculate the of letter grades for a(all) class(es)."""
-    if cls is None:
+    if class_name is None or class_name == "":
         letters = {}
-        for cls_i in grades:
-            letters[cls_i] = [grade_to_letter(grd) for grd in grades[cls_i].values()]
+        for class_name_i in grades:
+            letters[class_name_i] = [
+                grade_to_letter(grd) for grd in grades[class_name_i].values()
+            ]
     else:
         letters = []
-        for grd in grades[cls].values():
+        for grd in grades[class_name].values():
             letters.append(grade_to_letter(grd))
     return letters
 
 
-def letter_distribution(grades, cls=None):
+def letter_distribution(grades, class_name=None):
     """Calculate the distribution of letter grades for a(all) class(es)."""
-    letters = letter_grades(grades, cls)
-
-    if cls is None:
+    if class_name is None or class_name == "" or class_name in grades:
+        letters = letter_grades(grades, class_name)
+    else:
+        print(f"Class {class_name} not found.")
+    if class_name is None or class_name == "":
         counts = {}
-        for cls_i in letters:
-            counts[cls_i] = count_grades(letters[cls_i])
+        for class_name_i in letters:
+            counts[class_name_i] = count_grades(letters[class_name_i])
+        print("Letter grade distribution calculated for all classes.")
+    elif class_name not in grades:
+        return
     else:
         counts = count_grades(letters)
+        print(f"Letter grade distribution calculated for class {class_name}.")
     return counts
+
+```
+
+### Modification functions
+
+```{python}
+
+# ---------------------------------------
+# modification functions
+# ---------------------------------------
+def print_class(grades, class_name):
+    """Print all students' grades for an existing class"""
+    if class_name not in grades:
+        print(f"Class {class_name} not found.")
+    else:
+        pp(grades[class_name])
+        print(f"Gradebook printed for class {class_name}.")
+
+
+def change_grade(grades, class_name, student, new_grade):
+    """Update a student's grade after checking for existing class / student and valid grade"""
+    if class_name not in grades:
+        print(f"Class {class_name} not found.")
+    elif student not in grades[class_name]:
+        print(f"Student {student} not found in class {class_name}.")
+    elif not MIN_GRADE <= new_grade <= MAX_GRADE:
+        print(f"New grade of {new_grade} is not valid.")
+    else:
+        grades[class_name][student] = new_grade
+        print(f"Grade for student {student} in class {class_name} changed.")
+
+
+def add_student(grades, class_name, student, grade):
+    """Add a new student to an existing class and set grade"""
+    if class_name not in grades:
+        print(f"class {class_name} not found")
+    elif student in grades[class_name]:
+        print(f"student {student} is already in class {class_name}")
+    elif not 0 <= grade <= 100:
+        print(f"new grade of {grade} is not valid")
+    else:
+        grades[class_name][student] = grade
+        print(f"Student {student} added in class {class_name}.")
+
+
+def remove_student(grades, class_name, student):
+    """Remove an existing student from an existing class"""
+    if class_name not in grades:
+        print(f"class {class_name} not found")
+    elif student not in grades[class_name]:
+        print(f"student {student} not found in class {class_name}")
+    else:
+        del grades[class_name][student]
+        print(f"Student {student} removed from class {class_name}.")
+
+
+def add_class(grades, class_name):
+    """Add a new class to the gradebook"""
+    if class_name in grades:
+        print(f"class {class_name} is already in gradebook")
+    else:
+        grades[class_name] = {}
+        print(f"Class {class_name} added to gradebook.")
+
+```
+
+### File i/o functions
+
+```{python}
+
+
+
+# ---------------------------------------
+# file i/o functions
+# ---------------------------------------
+def generate_gradebook(classes):
+    """Generate gradebook for X number of classes, each with a random number of student, grade pairs"""
+    grades = {}
+    for class_name in classes:
+        n_students = random.randint(a=10, b=25)
+        names = [
+            "".join(random.choices(population=string.ascii_uppercase, k=2))
+            for _ in range(n_students)
+        ]
+        grds = np.round(
+            np.random.normal(loc=random.randint(a=70, b=80), scale=5, size=n_students),
+            1,
+        )
+        grades[class_name] = dict(zip(names, grds))
+    return grades
+
+
+def save_gradebook(grades, file_name):
+    # with open(filename, mode="w") as file: # manually write csv file
+    #     file.write("class_name,student,grade\n")
+    #     for class_name, students in grades.items():
+    #         for student, grade in students.items():
+    #             file.write(f"{class_name},{student},{grade}\n")
+    with open(file_name, mode="w", newline="") as file:  # now using csv
+        writer = csv.writer(file)
+        writer.writerow(["class", "student", "grade"])
+        for class_name, students in grades.items():
+            for student, grade in students.items():
+                writer.writerow([class_name, student, grade])
+    print(f"Gradebook saved as {file_name}.")
+
+
+def load_gradebook(file_name):
+    """Load gradebook and output as a nested dictionary"""
+    with open(file_name, "r", newline="") as file:
+        grades = {}
+        reader = csv.reader(file)
+        next(reader)
+        for row in reader:
+            class_name = row[0]
+            student = row[1]
+            grade = float(row[2])
+            if class_name not in grades:
+                grades[class_name] = {}
+            grades[class_name][student] = grade
+    print(f"Gradebook {file_name} loaded.")
+    return grades
+
+```
+
+### Application function
+
+```{python}
+
+# ---------------------------------------
+# application function
+# ---------------------------------------
+def manage_gradebook(grades, pwd, menu=MENU):
+    if pwd != PASSWORD:
+        print("password is not correct")
+    else:
+        if menu is None or MIN_GRADE is None or MAX_GRADE is None:
+            print(
+                "Please run line setting the default value(s) for menu and min/max grade."
+            )
+        else:
+            choice = ""
+            while choice != "10":
+                choice = input(menu)
+                match choice:
+                    case "1":
+                        class_name = input("Class name: ")
+                        print_class(grades, class_name=class_name)
+                        input("\nPress Enter to continue...")
+                    case "2":
+                        class_name = input("Class name: ")
+                        avg = calc_avg(grades, class_name=class_name)
+                        print(avg)
+                        input("\nPress Enter to continue...")
+                    case "3":
+                        class_name = input("Class name: ")
+                        min_max = calc_min_max(grades, class_name=class_name)
+                        print(min_max)
+                        input("\nPress Enter to continue...")
+                    case "4":
+                        class_name = input("Class name: ")
+                        letter_dist = letter_distribution(grades, class_name=class_name)
+                        print(letter_dist)
+                        input("\nPress Enter to continue...")
+                    case "5":
+                        class_name = input("Class name: ")
+                        student_name = input("Student name: ")
+                        new_grade = float(input("New grade: "))
+                        change_grade(
+                            grades,
+                            class_name=class_name,
+                            student=student_name,
+                            new_grade=new_grade,
+                        )
+                        input("\nPress Enter to continue...")
+                    case "6":
+                        class_name = input("Class name: ")
+                        student_name = input("Student name: ")
+                        grade = float(input("Grade: "))
+                        add_student(
+                            grades,
+                            class_name=class_name,
+                            student=student_name,
+                            grade=grade,
+                        )
+                        input("\nPress Enter to continue...")
+                    case "7":
+                        class_name = input("Class name: ")
+                        student_name = input("Student name: ")
+                        remove_student(
+                            grades, class_name=class_name, student=student_name
+                        )
+                        input("\nPress Enter to continue...")
+                    case "8":
+                        class_name = input("Class name: ")
+                        add_class(grades, class_name=class_name)
+                        input("\nPress Enter to continue...")
+                    case "9":
+                        file_name = input("Filename: ")
+                        save_gradebook(grades, file_name=file_name)
+                        input("\nPress Enter to continue...")
+                    case "10":
+                        print("Goodbye!")
+                    case _:
+                        print("Invalid choice.")
+                        input("\nPress Enter to continue...")
+
+```
+
+### Manage gradebook
+
+
+
+```{python}
+
+# ---------------------------------------
+# manage gradebook
+# ---------------------------------------
+# option 1: generate gradebook
+classes = [f"math125-00{section}" for section in range(1, 4)]
+classes.append("math320-001")
+
+```
+
+```{python}
+#| eval: false
+
+data_grades = generate_gradebook(classes)
+
+```
+
+```{python}
+
+# option 2: load gradebook
+data_grades = load_gradebook("files//gradebook.csv")
+
+```
+
+```{python}
+#| eval: false
+
+# NOT RUN!!! interactive console application
+# manage gradebook
+manage_gradebook(data_grades, pwd=PASSWORD)
 
 ```
 
@@ -180,6 +453,3 @@ letter_distribution(data_grades, classes[0])
 letter_distribution(data_grades)
 
 ```
-
-
-

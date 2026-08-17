@@ -75,10 +75,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2baf9616dcd62a487e8517e630363ef5.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-904f66e2873e8152e0dd3628262659fa.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-f356c57aa349632ee556adf595a27b58.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -183,8 +183,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#import-modules" id="toc-import-modules" class="nav-link active" data-scroll-target="#import-modules">Import modules</a></li>
-  <li><a href="#generate-gradebook" id="toc-generate-gradebook" class="nav-link" data-scroll-target="#generate-gradebook">Generate gradebook</a></li>
-  <li><a href="#analyze-gradebook" id="toc-analyze-gradebook" class="nav-link" data-scroll-target="#analyze-gradebook">Analyze gradebook</a></li>
+  <li><a href="#module-constants" id="toc-module-constants" class="nav-link" data-scroll-target="#module-constants">Module constants</a></li>
+  <li><a href="#analysis-functions" id="toc-analysis-functions" class="nav-link" data-scroll-target="#analysis-functions">Analysis functions</a></li>
+  <li><a href="#modification-functions" id="toc-modification-functions" class="nav-link" data-scroll-target="#modification-functions">Modification functions</a></li>
+  <li><a href="#file-io-functions" id="toc-file-io-functions" class="nav-link" data-scroll-target="#file-io-functions">File i/o functions</a></li>
+  <li><a href="#application-function" id="toc-application-function" class="nav-link" data-scroll-target="#application-function">Application function</a></li>
+  <li><a href="#manage-gradebook" id="toc-manage-gradebook" class="nav-link" data-scroll-target="#manage-gradebook">Manage gradebook</a></li>
   </ul>
 </nav>
     </div>
@@ -197,312 +201,462 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="import-modules" class="level3">
 <h3 class="anchored" data-anchor-id="import-modules">Import modules</h3>
-<div id="04f4a6d2" class="cell" data-execution_count="1">
+<div id="741de32e" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># import modules</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statistics</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> string</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pp</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statistics</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> string</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pp</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="generate-gradebook" class="level3">
-<h3 class="anchored" data-anchor-id="generate-gradebook">Generate gradebook</h3>
-<div id="5234ece1" class="cell" data-execution_count="2">
+<section id="module-constants" class="level3">
+<h3 class="anchored" data-anchor-id="module-constants">Module constants</h3>
+<div id="737f4c25" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># generate gradebook</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># module constants</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># get class names (not hardcoding for extra practice)</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>classes <span class="op">=</span> [<span class="ss">f"math125-00</span><span class="sc">{</span>section<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> section <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">4</span>)]</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>classes.append(<span class="st">"math320-001"</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># randomly generate students and grades data</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>data_grades <span class="op">=</span> {}</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cls <span class="kw">in</span> classes:</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    n_students <span class="op">=</span> random.randint(a<span class="op">=</span><span class="dv">10</span>, b<span class="op">=</span><span class="dv">25</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    names <span class="op">=</span> [</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">""</span>.join(random.choices(population<span class="op">=</span>string.ascii_uppercase, k<span class="op">=</span><span class="dv">2</span>))</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_students)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    grades <span class="op">=</span> np.<span class="bu">round</span>(</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        np.random.normal(loc<span class="op">=</span>random.randint(a<span class="op">=</span><span class="dv">70</span>, b<span class="op">=</span><span class="dv">80</span>), scale<span class="op">=</span><span class="dv">5</span>, size<span class="op">=</span>n_students), <span class="dv">1</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    data_grades[cls] <span class="op">=</span> <span class="bu">dict</span>(<span class="bu">zip</span>(names, grades))</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># view gradebook</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>pp(data_grades)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>{'math125-001': {'HT': np.float64(76.3),
-                 'BE': np.float64(72.8),
-                 'TM': np.float64(75.7),
-                 'UG': np.float64(70.6),
-                 'SG': np.float64(72.5),
-                 'CU': np.float64(65.7),
-                 'EE': np.float64(72.3),
-                 'XX': np.float64(71.1),
-                 'LJ': np.float64(71.9),
-                 'IQ': np.float64(72.0),
-                 'SA': np.float64(65.9),
-                 'RG': np.float64(71.6),
-                 'LG': np.float64(66.9),
-                 'HR': np.float64(70.0),
-                 'DA': np.float64(65.0),
-                 'NR': np.float64(77.7),
-                 'BL': np.float64(66.3),
-                 'ZI': np.float64(73.1),
-                 'MR': np.float64(67.4),
-                 'DV': np.float64(70.1),
-                 'TA': np.float64(75.3),
-                 'YY': np.float64(72.6)},
- 'math125-002': {'FE': np.float64(76.9),
-                 'SD': np.float64(77.2),
-                 'FC': np.float64(89.6),
-                 'UJ': np.float64(80.2),
-                 'DR': np.float64(82.3),
-                 'GK': np.float64(75.4),
-                 'LO': np.float64(69.7),
-                 'ND': np.float64(76.2),
-                 'QK': np.float64(73.3),
-                 'TA': np.float64(81.7),
-                 'RD': np.float64(80.6),
-                 'XE': np.float64(72.3),
-                 'QL': np.float64(71.2),
-                 'KV': np.float64(74.0),
-                 'GQ': np.float64(75.9)},
- 'math125-003': {'PO': np.float64(74.9),
-                 'KZ': np.float64(77.8),
-                 'HF': np.float64(74.5),
-                 'RX': np.float64(75.9),
-                 'OL': np.float64(71.5),
-                 'FY': np.float64(77.4),
-                 'DG': np.float64(74.2),
-                 'PS': np.float64(71.8),
-                 'UL': np.float64(75.5),
-                 'XI': np.float64(79.7),
-                 'XR': np.float64(82.1),
-                 'JV': np.float64(74.1),
-                 'UE': np.float64(77.2),
-                 'DT': np.float64(74.4),
-                 'XY': np.float64(82.2),
-                 'WR': np.float64(72.4)},
- 'math320-001': {'DI': np.float64(77.3),
-                 'YD': np.float64(68.8),
-                 'GZ': np.float64(70.2),
-                 'IQ': np.float64(67.4),
-                 'AQ': np.float64(65.1),
-                 'AE': np.float64(75.1),
-                 'UR': np.float64(74.3),
-                 'AX': np.float64(67.5),
-                 'AF': np.float64(76.3),
-                 'PN': np.float64(74.3)}}</code></pre>
-</div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>PASSWORD <span class="op">=</span> <span class="st">"1234"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>MENU <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">---------------------</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">Gradebook Manager</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="st">---------------------</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ch">\n</span><span class="st">What would you like to do?</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="st">Analysis</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="st">1. Print class</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="st">2. Class average</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="st">3. Min / Max</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="st">4. Summarize letter distribution</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="ch">\n</span><span class="st">Modification</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="st">5. Change grade</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="st">6. Add student</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="st">7. Remove student</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="st">8. Add class</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="ch">\n</span><span class="st">File</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="st">9. Save gradebook</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="st">10. Quit</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="ch">\n</span><span class="st">Choice: """</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>MIN_GRADE <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>MAX_GRADE <span class="op">=</span> <span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="analyze-gradebook" class="level3">
-<h3 class="anchored" data-anchor-id="analyze-gradebook">Analyze gradebook</h3>
-<div id="5802a335" class="cell" data-execution_count="3">
+<section id="analysis-functions" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-functions">Analysis functions</h3>
+<div id="74db1eba" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># analysis functions</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_avg(grades, class_name<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the average grade for a(all) class(es)."""</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> class_name <span class="op">==</span> <span class="st">""</span>:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        mean <span class="op">=</span> {}</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> class_name_i <span class="kw">in</span> grades:</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            mean[class_name_i] <span class="op">=</span> <span class="bu">round</span>(</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                statistics.mean(grades[class_name_i].values()), <span class="dv">2</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Average grade calculated for all classes."</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> class_name <span class="kw">not</span> <span class="kw">in</span> grades:</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> not found."</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        mean <span class="op">=</span> <span class="bu">round</span>(statistics.mean(grades[class_name].values()), <span class="dv">2</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Average grade calculated for class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mean</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_min_max(grades, class_name<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the min and max grades for a(all) class(es)."""</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> class_name <span class="op">==</span> <span class="st">""</span>:</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        minmax <span class="op">=</span> {}</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> class_name_i <span class="kw">in</span> grades:</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>            minmax[class_name_i] <span class="op">=</span> [</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                <span class="bu">min</span>(grades[class_name_i].values()),</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                <span class="bu">max</span>(grades[class_name_i].values()),</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>            ]</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Min and max grades calculated for all classes."</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> class_name <span class="kw">not</span> <span class="kw">in</span> grades:</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> not found."</span>)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>        minmax <span class="op">=</span> [<span class="bu">min</span>(grades[class_name].values()), <span class="bu">max</span>(grades[class_name].values())]</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Min and max grades calculated for class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> minmax</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grade_to_letter(grade):</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the letter grade corresponding to the numeric grade."""</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> grade <span class="op">&gt;=</span> <span class="dv">90</span>:</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"A"</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> grade <span class="op">&gt;=</span> <span class="dv">80</span>:</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"B"</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> grade <span class="op">&gt;=</span> <span class="dv">70</span>:</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"C"</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> grade <span class="op">&gt;=</span> <span class="dv">60</span>:</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"D"</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"F"</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_grades(letters):</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Count the distribution of letter grades for a(all) class(es)."""</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sorted</span>(Counter(letters).items())</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> letter_grades(grades, class_name<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the of letter grades for a(all) class(es)."""</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> class_name <span class="op">==</span> <span class="st">""</span>:</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>        letters <span class="op">=</span> {}</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> class_name_i <span class="kw">in</span> grades:</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>            letters[class_name_i] <span class="op">=</span> [</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>                grade_to_letter(grd) <span class="cf">for</span> grd <span class="kw">in</span> grades[class_name_i].values()</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>            ]</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>        letters <span class="op">=</span> []</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> grd <span class="kw">in</span> grades[class_name].values():</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>            letters.append(grade_to_letter(grd))</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> letters</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> letter_distribution(grades, class_name<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the distribution of letter grades for a(all) class(es)."""</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> class_name <span class="op">==</span> <span class="st">""</span> <span class="kw">or</span> class_name <span class="kw">in</span> grades:</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>        letters <span class="op">=</span> letter_grades(grades, class_name)</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> not found."</span>)</span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> class_name <span class="op">==</span> <span class="st">""</span>:</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>        counts <span class="op">=</span> {}</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> class_name_i <span class="kw">in</span> letters:</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>            counts[class_name_i] <span class="op">=</span> count_grades(letters[class_name_i])</span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Letter grade distribution calculated for all classes."</span>)</span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> class_name <span class="kw">not</span> <span class="kw">in</span> grades:</span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>        counts <span class="op">=</span> count_grades(letters)</span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Letter grade distribution calculated for class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> counts</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="modification-functions" class="level3">
+<h3 class="anchored" data-anchor-id="modification-functions">Modification functions</h3>
+<div id="918e1095" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># analyze gradebook</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># modification functions</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># define functions</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_class(grades, cls):</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Print the grades of each student in the class."""</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    pp(grades[cls])</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_avg(grades, cls<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the average grade for a(all) class(es)."""</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cls <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        mean <span class="op">=</span> {}</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> cls_i <span class="kw">in</span> grades:</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            mean[cls_i] <span class="op">=</span> <span class="bu">round</span>(statistics.mean(grades[cls_i].values()), <span class="dv">2</span>)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        mean <span class="op">=</span> <span class="bu">round</span>(statistics.mean(grades[cls].values()), <span class="dv">2</span>)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mean</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_min_max(grades, cls<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the min and max grades for a(all) class(es)."""</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cls <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        minmax <span class="op">=</span> {}</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> cls_i <span class="kw">in</span> grades:</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>            minmax[cls_i] <span class="op">=</span> [<span class="bu">min</span>(grades[cls_i].values()), <span class="bu">max</span>(grades[cls_i].values())]</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        minmax <span class="op">=</span> [<span class="bu">min</span>(grades[cls].values()), <span class="bu">max</span>(grades[cls].values())]</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> minmax</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grade_to_letter(grade):</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the letter grade corresponding to the numeric grade."""</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> grade <span class="op">&gt;=</span> <span class="dv">90</span>:</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"A"</span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> grade <span class="op">&gt;=</span> <span class="dv">80</span>:</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"B"</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> grade <span class="op">&gt;=</span> <span class="dv">70</span>:</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"C"</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> grade <span class="op">&gt;=</span> <span class="dv">60</span>:</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"D"</span></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"F"</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_grades(letters):</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Count the distribution of letter grades for a(all) class(es)."""</span></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sorted</span>(Counter(letters).items())</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_class(grades, class_name):</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Print all students' grades for an existing class"""</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">not</span> <span class="kw">in</span> grades:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> not found."</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        pp(grades[class_name])</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Gradebook printed for class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> change_grade(grades, class_name, student, new_grade):</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Update a student's grade after checking for existing class / student and valid grade"""</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">not</span> <span class="kw">in</span> grades:</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> not found."</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> student <span class="kw">not</span> <span class="kw">in</span> grades[class_name]:</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Student </span><span class="sc">{</span>student<span class="sc">}</span><span class="ss"> not found in class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="kw">not</span> MIN_GRADE <span class="op">&lt;=</span> new_grade <span class="op">&lt;=</span> MAX_GRADE:</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"New grade of </span><span class="sc">{</span>new_grade<span class="sc">}</span><span class="ss"> is not valid."</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        grades[class_name][student] <span class="op">=</span> new_grade</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Grade for student </span><span class="sc">{</span>student<span class="sc">}</span><span class="ss"> in class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> changed."</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_student(grades, class_name, student, grade):</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Add a new student to an existing class and set grade"""</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">not</span> <span class="kw">in</span> grades:</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> not found"</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> student <span class="kw">in</span> grades[class_name]:</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"student </span><span class="sc">{</span>student<span class="sc">}</span><span class="ss"> is already in class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="kw">not</span> <span class="dv">0</span> <span class="op">&lt;=</span> grade <span class="op">&lt;=</span> <span class="dv">100</span>:</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"new grade of </span><span class="sc">{</span>grade<span class="sc">}</span><span class="ss"> is not valid"</span>)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        grades[class_name][student] <span class="op">=</span> grade</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Student </span><span class="sc">{</span>student<span class="sc">}</span><span class="ss"> added in class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> remove_student(grades, class_name, student):</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Remove an existing student from an existing class"""</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">not</span> <span class="kw">in</span> grades:</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> not found"</span>)</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> student <span class="kw">not</span> <span class="kw">in</span> grades[class_name]:</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"student </span><span class="sc">{</span>student<span class="sc">}</span><span class="ss"> not found in class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>        <span class="kw">del</span> grades[class_name][student]</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Student </span><span class="sc">{</span>student<span class="sc">}</span><span class="ss"> removed from class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> letter_grades(grades, cls<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the of letter grades for a(all) class(es)."""</span></span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cls <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>        letters <span class="op">=</span> {}</span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> cls_i <span class="kw">in</span> grades:</span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>            letters[cls_i] <span class="op">=</span> [grade_to_letter(grd) <span class="cf">for</span> grd <span class="kw">in</span> grades[cls_i].values()]</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>        letters <span class="op">=</span> []</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> grd <span class="kw">in</span> grades[cls].values():</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>            letters.append(grade_to_letter(grd))</span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> letters</span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> letter_distribution(grades, cls<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the distribution of letter grades for a(all) class(es)."""</span></span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>    letters <span class="op">=</span> letter_grades(grades, cls)</span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cls <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>        counts <span class="op">=</span> {}</span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> cls_i <span class="kw">in</span> letters:</span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>            counts[cls_i] <span class="op">=</span> count_grades(letters[cls_i])</span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>        counts <span class="op">=</span> count_grades(letters)</span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> counts</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_class(grades, class_name):</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Add a new class to the gradebook"""</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">in</span> grades:</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> is already in gradebook"</span>)</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>        grades[class_name] <span class="op">=</span> {}</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> added to gradebook."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="2c9c420d" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># analyze grades (i.e. test functions)</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>print_class(data_grades, classes[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="file-io-functions" class="level3">
+<h3 class="anchored" data-anchor-id="file-io-functions">File i/o functions</h3>
+<div id="86153d44" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># file i/o functions</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_gradebook(classes):</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Generate gradebook for X number of classes, each with a random number of student, grade pairs"""</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    grades <span class="op">=</span> {}</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> class_name <span class="kw">in</span> classes:</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        n_students <span class="op">=</span> random.randint(a<span class="op">=</span><span class="dv">10</span>, b<span class="op">=</span><span class="dv">25</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        names <span class="op">=</span> [</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">""</span>.join(random.choices(population<span class="op">=</span>string.ascii_uppercase, k<span class="op">=</span><span class="dv">2</span>))</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_students)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        grds <span class="op">=</span> np.<span class="bu">round</span>(</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            np.random.normal(loc<span class="op">=</span>random.randint(a<span class="op">=</span><span class="dv">70</span>, b<span class="op">=</span><span class="dv">80</span>), scale<span class="op">=</span><span class="dv">5</span>, size<span class="op">=</span>n_students),</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>            <span class="dv">1</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        grades[class_name] <span class="op">=</span> <span class="bu">dict</span>(<span class="bu">zip</span>(names, grds))</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> grades</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> save_gradebook(grades, file_name):</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># with open(filename, mode="w") as file: # manually write csv file</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     file.write("class_name,student,grade\n")</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     for class_name, students in grades.items():</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">#         for student, grade in students.items():</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">#             file.write(f"{class_name},{student},{grade}\n")</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_name, mode<span class="op">=</span><span class="st">"w"</span>, newline<span class="op">=</span><span class="st">""</span>) <span class="im">as</span> <span class="bu">file</span>:  <span class="co"># now using csv</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        writer <span class="op">=</span> csv.writer(<span class="bu">file</span>)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        writer.writerow([<span class="st">"class"</span>, <span class="st">"student"</span>, <span class="st">"grade"</span>])</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> class_name, students <span class="kw">in</span> grades.items():</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> student, grade <span class="kw">in</span> students.items():</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>                writer.writerow([class_name, student, grade])</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Gradebook saved as </span><span class="sc">{</span>file_name<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_gradebook(file_name):</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Load gradebook and output as a nested dictionary"""</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_name, <span class="st">"r"</span>, newline<span class="op">=</span><span class="st">""</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        grades <span class="op">=</span> {}</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>        reader <span class="op">=</span> csv.reader(<span class="bu">file</span>)</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>        <span class="bu">next</span>(reader)</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> row <span class="kw">in</span> reader:</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>            class_name <span class="op">=</span> row[<span class="dv">0</span>]</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>            student <span class="op">=</span> row[<span class="dv">1</span>]</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>            grade <span class="op">=</span> <span class="bu">float</span>(row[<span class="dv">2</span>])</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> class_name <span class="kw">not</span> <span class="kw">in</span> grades:</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>                grades[class_name] <span class="op">=</span> {}</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>            grades[class_name][student] <span class="op">=</span> grade</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Gradebook </span><span class="sc">{</span>file_name<span class="sc">}</span><span class="ss"> loaded."</span>)</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> grades</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="application-function" class="level3">
+<h3 class="anchored" data-anchor-id="application-function">Application function</h3>
+<div id="ae3cfdb9" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># application function</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> manage_gradebook(grades, pwd, menu<span class="op">=</span>MENU):</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pwd <span class="op">!=</span> PASSWORD:</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"password is not correct"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> menu <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> MIN_GRADE <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> MAX_GRADE <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Please run line setting the default value(s) for menu and min/max grade."</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>            choice <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> choice <span class="op">!=</span> <span class="st">"10"</span>:</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                choice <span class="op">=</span> <span class="bu">input</span>(menu)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>                <span class="cf">match</span> choice:</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"1"</span>:</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>                        class_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Class name: "</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>                        print_class(grades, class_name<span class="op">=</span>class_name)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"2"</span>:</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>                        class_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Class name: "</span>)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>                        avg <span class="op">=</span> calc_avg(grades, class_name<span class="op">=</span>class_name)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">print</span>(avg)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"3"</span>:</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>                        class_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Class name: "</span>)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>                        min_max <span class="op">=</span> calc_min_max(grades, class_name<span class="op">=</span>class_name)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">print</span>(min_max)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"4"</span>:</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>                        class_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Class name: "</span>)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>                        letter_dist <span class="op">=</span> letter_distribution(grades, class_name<span class="op">=</span>class_name)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">print</span>(letter_dist)</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"5"</span>:</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>                        class_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Class name: "</span>)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>                        student_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Student name: "</span>)</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>                        new_grade <span class="op">=</span> <span class="bu">float</span>(<span class="bu">input</span>(<span class="st">"New grade: "</span>))</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>                        change_grade(</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>                            grades,</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>                            class_name<span class="op">=</span>class_name,</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>                            student<span class="op">=</span>student_name,</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>                            new_grade<span class="op">=</span>new_grade,</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>                        )</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"6"</span>:</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>                        class_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Class name: "</span>)</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>                        student_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Student name: "</span>)</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>                        grade <span class="op">=</span> <span class="bu">float</span>(<span class="bu">input</span>(<span class="st">"Grade: "</span>))</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>                        add_student(</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>                            grades,</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>                            class_name<span class="op">=</span>class_name,</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>                            student<span class="op">=</span>student_name,</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>                            grade<span class="op">=</span>grade,</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>                        )</span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"7"</span>:</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>                        class_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Class name: "</span>)</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>                        student_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Student name: "</span>)</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>                        remove_student(</span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>                            grades, class_name<span class="op">=</span>class_name, student<span class="op">=</span>student_name</span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>                        )</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"8"</span>:</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>                        class_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Class name: "</span>)</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>                        add_class(grades, class_name<span class="op">=</span>class_name)</span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"9"</span>:</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>                        file_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Filename: "</span>)</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>                        save_gradebook(grades, file_name<span class="op">=</span>file_name)</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"10"</span>:</span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">print</span>(<span class="st">"Goodbye!"</span>)</span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> _:</span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">print</span>(<span class="st">"Invalid choice."</span>)</span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="manage-gradebook" class="level3">
+<h3 class="anchored" data-anchor-id="manage-gradebook">Manage gradebook</h3>
+<div id="7b673535" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># manage gradebook</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># option 1: generate gradebook</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>classes <span class="op">=</span> [<span class="ss">f"math125-00</span><span class="sc">{</span>section<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> section <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">4</span>)]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>classes.append(<span class="st">"math320-001"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="15ff1880" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data_grades <span class="op">=</span> generate_gradebook(classes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="29002635" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># option 2: load gradebook</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>data_grades <span class="op">=</span> load_gradebook(<span class="st">"files//gradebook.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>{'HT': np.float64(76.3),
- 'BE': np.float64(72.8),
- 'TM': np.float64(75.7),
- 'UG': np.float64(70.6),
- 'SG': np.float64(72.5),
- 'CU': np.float64(65.7),
- 'EE': np.float64(72.3),
- 'XX': np.float64(71.1),
- 'LJ': np.float64(71.9),
- 'IQ': np.float64(72.0),
- 'SA': np.float64(65.9),
- 'RG': np.float64(71.6),
- 'LG': np.float64(66.9),
- 'HR': np.float64(70.0),
- 'DA': np.float64(65.0),
- 'NR': np.float64(77.7),
- 'BL': np.float64(66.3),
- 'ZI': np.float64(73.1),
- 'MR': np.float64(67.4),
- 'DV': np.float64(70.1),
- 'TA': np.float64(75.3),
- 'YY': np.float64(72.6)}</code></pre>
+<pre><code>Gradebook files//gradebook.csv loaded.</code></pre>
 </div>
 </div>
-<div id="e1274571" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>calc_avg(data_grades, classes[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>np.float64(71.04)</code></pre>
+<div id="9e300da5" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NOT RUN!!! interactive console application</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># manage gradebook</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>manage_gradebook(data_grades, pwd<span class="op">=</span>PASSWORD)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="a1c28a29" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># analyze grades (i.e. test functions)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>print_class(data_grades, classes[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{'NO': 78.5,
+ 'AQ': 74.5,
+ 'GD': 76.3,
+ 'HR': 80.2,
+ 'JC': 73.4,
+ 'LO': 72.9,
+ 'FP': 69.1,
+ 'AF': 71.9,
+ 'HF': 74.8,
+ 'GF': 70.8,
+ 'PX': 89.2,
+ 'PP': 76.2}
+Gradebook printed for class math125-001.</code></pre>
 </div>
 </div>
-<div id="ec75f7d7" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>calc_avg(data_grades)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>{'math125-001': np.float64(71.04),
- 'math125-002': np.float64(77.1),
- 'math125-003': np.float64(75.97),
- 'math320-001': np.float64(71.63)}</code></pre>
+<div id="34f4eb49" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>calc_avg(data_grades, classes[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Average grade calculated for class math125-001.</code></pre>
 </div>
-</div>
-<div id="e6321e57" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>calc_min_max(data_grades, classes[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>[np.float64(65.0), np.float64(77.7)]</code></pre>
-</div>
-</div>
-<div id="7ed72d5a" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>calc_min_max(data_grades)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>{'math125-001': [np.float64(65.0), np.float64(77.7)],
- 'math125-002': [np.float64(69.7), np.float64(89.6)],
- 'math125-003': [np.float64(71.5), np.float64(82.2)],
- 'math320-001': [np.float64(65.1), np.float64(77.3)]}</code></pre>
-</div>
-</div>
-<div id="9c3ee780" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>letter_grades(data_grades, classes[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>['C',
- 'C',
- 'C',
- 'C',
- 'C',
- 'D',
- 'C',
- 'C',
- 'C',
- 'C',
- 'D',
- 'C',
- 'D',
- 'C',
- 'D',
- 'C',
- 'D',
- 'C',
- 'D',
- 'C',
- 'C',
- 'C']</code></pre>
-</div>
-</div>
-<div id="7d5b2d89" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>letter_grades(data_grades)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>{'math125-001': ['C',
-  'C',
-  'C',
-  'C',
-  'C',
+<pre><code>75.65</code></pre>
+</div>
+</div>
+<div id="76cbb89e" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>calc_avg(data_grades)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Average grade calculated for all classes.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>{'math125-001': 75.65,
+ 'math125-002': 69.68,
+ 'math125-003': 75.12,
+ 'math320-001': 76.85,
+ 'math321-001': 90.5}</code></pre>
+</div>
+</div>
+<div id="b9d7008d" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>calc_min_max(data_grades, classes[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Min and max grades calculated for class math125-001.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>[69.1, 89.2]</code></pre>
+</div>
+</div>
+<div id="2029bc5e" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>calc_min_max(data_grades)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Min and max grades calculated for all classes.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>{'math125-001': [69.1, 89.2],
+ 'math125-002': [62.4, 84.5],
+ 'math125-003': [66.8, 86.1],
+ 'math320-001': [68.6, 98.1],
+ 'math321-001': [90.1, 90.9]}</code></pre>
+</div>
+</div>
+<div id="230fc500" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>letter_grades(data_grades, classes[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>['C', 'C', 'C', 'B', 'C', 'C', 'D', 'C', 'C', 'C', 'B', 'C']</code></pre>
+</div>
+</div>
+<div id="8804f00b" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>letter_grades(data_grades)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>{'math125-001': ['C', 'C', 'C', 'B', 'C', 'C', 'D', 'C', 'C', 'C', 'B', 'C'],
+ 'math125-002': ['D',
   'D',
-  'C',
-  'C',
-  'C',
-  'C',
   'D',
-  'C',
   'D',
-  'C',
   'D',
-  'C',
-  'D',
-  'C',
-  'D',
-  'C',
-  'C',
-  'C'],
- 'math125-002': ['C',
-  'C',
   'B',
-  'B',
-  'B',
-  'C',
+  'D',
   'D',
   'C',
   'C',
-  'B',
-  'B',
+  'D',
   'C',
-  'C',
-  'C',
+  'D',
   'C'],
  'math125-003': ['C',
   'C',
@@ -512,30 +666,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   'C',
   'C',
   'C',
+  'D',
+  'C',
+  'C',
+  'C',
   'C',
   'C',
   'B',
   'C',
-  'C',
-  'C',
-  'B',
   'C'],
- 'math320-001': ['C', 'D', 'C', 'D', 'D', 'C', 'C', 'D', 'C', 'C']}</code></pre>
+ 'math320-001': ['A', 'C', 'C', 'B', 'C', 'D', 'C', 'C', 'C', 'D', 'B', 'D'],
+ 'math321-001': ['A', 'A']}</code></pre>
 </div>
 </div>
-<div id="a308461e" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>letter_distribution(data_grades, classes[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>[('C', 16), ('D', 6)]</code></pre>
+<div id="35120e44" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>letter_distribution(data_grades, classes[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Letter grade distribution calculated for class math125-001.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>[('B', 2), ('C', 9), ('D', 1)]</code></pre>
 </div>
 </div>
-<div id="ed83a853" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>letter_distribution(data_grades)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>{'math125-001': [('C', 16), ('D', 6)],
- 'math125-002': [('B', 5), ('C', 9), ('D', 1)],
- 'math125-003': [('B', 2), ('C', 14)],
- 'math320-001': [('C', 6), ('D', 4)]}</code></pre>
+<div id="333f1898" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>letter_distribution(data_grades)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Letter grade distribution calculated for all classes.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>{'math125-001': [('B', 2), ('C', 9), ('D', 1)],
+ 'math125-002': [('B', 1), ('C', 4), ('D', 9)],
+ 'math125-003': [('B', 1), ('C', 15), ('D', 1)],
+ 'math320-001': [('A', 1), ('B', 2), ('C', 6), ('D', 3)],
+ 'math321-001': [('A', 2)]}</code></pre>
 </div>
 </div>
 
@@ -1005,178 +1168,442 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="nav-page nav-page-next">
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Gradebook </span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">### Import modules</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># import modules</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statistics</span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> string</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pp</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="fu">### Generate gradebook</span></span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
-<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a><span class="co"># generate gradebook</span></span>
-<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
-<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a><span class="co"># get class names (not hardcoding for extra practice)</span></span>
-<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>classes <span class="op">=</span> [<span class="ss">f"math125-00</span><span class="sc">{</span>section<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> section <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">4</span>)]</span>
-<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>classes.append(<span class="st">"math320-001"</span>)</span>
-<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a><span class="co"># randomly generate students and grades data</span></span>
-<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>data_grades <span class="op">=</span> {}</span>
-<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cls <span class="kw">in</span> classes:</span>
-<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>    n_students <span class="op">=</span> random.randint(a<span class="op">=</span><span class="dv">10</span>, b<span class="op">=</span><span class="dv">25</span>)</span>
-<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>    names <span class="op">=</span> [</span>
-<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>        <span class="st">""</span>.join(random.choices(population<span class="op">=</span>string.ascii_uppercase, k<span class="op">=</span><span class="dv">2</span>))</span>
-<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_students)</span>
-<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>    grades <span class="op">=</span> np.<span class="bu">round</span>(</span>
-<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>        np.random.normal(loc<span class="op">=</span>random.randint(a<span class="op">=</span><span class="dv">70</span>, b<span class="op">=</span><span class="dv">80</span>), scale<span class="op">=</span><span class="dv">5</span>, size<span class="op">=</span>n_students), <span class="dv">1</span></span>
-<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>    data_grades[cls] <span class="op">=</span> <span class="bu">dict</span>(<span class="bu">zip</span>(names, grades))</span>
-<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a><span class="co"># view gradebook</span></span>
-<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>pp(data_grades)</span>
-<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a><span class="fu">### Analyze gradebook</span></span>
-<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
-<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a><span class="co"># analyze gradebook</span></span>
-<span id="cb23-57"><a href="#cb23-57" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
-<span id="cb23-58"><a href="#cb23-58" aria-hidden="true" tabindex="-1"></a><span class="co"># define functions</span></span>
-<span id="cb23-59"><a href="#cb23-59" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_class(grades, cls):</span>
-<span id="cb23-60"><a href="#cb23-60" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Print the grades of each student in the class."""</span></span>
-<span id="cb23-61"><a href="#cb23-61" aria-hidden="true" tabindex="-1"></a>    pp(grades[cls])</span>
-<span id="cb23-62"><a href="#cb23-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-63"><a href="#cb23-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-64"><a href="#cb23-64" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_avg(grades, cls<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb23-65"><a href="#cb23-65" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the average grade for a(all) class(es)."""</span></span>
-<span id="cb23-66"><a href="#cb23-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cls <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb23-67"><a href="#cb23-67" aria-hidden="true" tabindex="-1"></a>        mean <span class="op">=</span> {}</span>
-<span id="cb23-68"><a href="#cb23-68" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> cls_i <span class="kw">in</span> grades:</span>
-<span id="cb23-69"><a href="#cb23-69" aria-hidden="true" tabindex="-1"></a>            mean[cls_i] <span class="op">=</span> <span class="bu">round</span>(statistics.mean(grades[cls_i].values()), <span class="dv">2</span>)</span>
-<span id="cb23-70"><a href="#cb23-70" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb23-71"><a href="#cb23-71" aria-hidden="true" tabindex="-1"></a>        mean <span class="op">=</span> <span class="bu">round</span>(statistics.mean(grades[cls].values()), <span class="dv">2</span>)</span>
-<span id="cb23-72"><a href="#cb23-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mean</span>
-<span id="cb23-73"><a href="#cb23-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-74"><a href="#cb23-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-75"><a href="#cb23-75" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_min_max(grades, cls<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb23-76"><a href="#cb23-76" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the min and max grades for a(all) class(es)."""</span></span>
-<span id="cb23-77"><a href="#cb23-77" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cls <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb23-78"><a href="#cb23-78" aria-hidden="true" tabindex="-1"></a>        minmax <span class="op">=</span> {}</span>
-<span id="cb23-79"><a href="#cb23-79" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> cls_i <span class="kw">in</span> grades:</span>
-<span id="cb23-80"><a href="#cb23-80" aria-hidden="true" tabindex="-1"></a>            minmax[cls_i] <span class="op">=</span> [<span class="bu">min</span>(grades[cls_i].values()), <span class="bu">max</span>(grades[cls_i].values())]</span>
-<span id="cb23-81"><a href="#cb23-81" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb23-82"><a href="#cb23-82" aria-hidden="true" tabindex="-1"></a>        minmax <span class="op">=</span> [<span class="bu">min</span>(grades[cls].values()), <span class="bu">max</span>(grades[cls].values())]</span>
-<span id="cb23-83"><a href="#cb23-83" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> minmax</span>
-<span id="cb23-84"><a href="#cb23-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-85"><a href="#cb23-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-86"><a href="#cb23-86" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grade_to_letter(grade):</span>
-<span id="cb23-87"><a href="#cb23-87" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the letter grade corresponding to the numeric grade."""</span></span>
-<span id="cb23-88"><a href="#cb23-88" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> grade <span class="op">&gt;=</span> <span class="dv">90</span>:</span>
-<span id="cb23-89"><a href="#cb23-89" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"A"</span></span>
-<span id="cb23-90"><a href="#cb23-90" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> grade <span class="op">&gt;=</span> <span class="dv">80</span>:</span>
-<span id="cb23-91"><a href="#cb23-91" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"B"</span></span>
-<span id="cb23-92"><a href="#cb23-92" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> grade <span class="op">&gt;=</span> <span class="dv">70</span>:</span>
-<span id="cb23-93"><a href="#cb23-93" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"C"</span></span>
-<span id="cb23-94"><a href="#cb23-94" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> grade <span class="op">&gt;=</span> <span class="dv">60</span>:</span>
-<span id="cb23-95"><a href="#cb23-95" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"D"</span></span>
-<span id="cb23-96"><a href="#cb23-96" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb23-97"><a href="#cb23-97" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"F"</span></span>
-<span id="cb23-98"><a href="#cb23-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-99"><a href="#cb23-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-100"><a href="#cb23-100" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_grades(letters):</span>
-<span id="cb23-101"><a href="#cb23-101" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Count the distribution of letter grades for a(all) class(es)."""</span></span>
-<span id="cb23-102"><a href="#cb23-102" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sorted</span>(Counter(letters).items())</span>
-<span id="cb23-103"><a href="#cb23-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-104"><a href="#cb23-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-105"><a href="#cb23-105" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> letter_grades(grades, cls<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb23-106"><a href="#cb23-106" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the of letter grades for a(all) class(es)."""</span></span>
-<span id="cb23-107"><a href="#cb23-107" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cls <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb23-108"><a href="#cb23-108" aria-hidden="true" tabindex="-1"></a>        letters <span class="op">=</span> {}</span>
-<span id="cb23-109"><a href="#cb23-109" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> cls_i <span class="kw">in</span> grades:</span>
-<span id="cb23-110"><a href="#cb23-110" aria-hidden="true" tabindex="-1"></a>            letters[cls_i] <span class="op">=</span> [grade_to_letter(grd) <span class="cf">for</span> grd <span class="kw">in</span> grades[cls_i].values()]</span>
-<span id="cb23-111"><a href="#cb23-111" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb23-112"><a href="#cb23-112" aria-hidden="true" tabindex="-1"></a>        letters <span class="op">=</span> []</span>
-<span id="cb23-113"><a href="#cb23-113" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> grd <span class="kw">in</span> grades[cls].values():</span>
-<span id="cb23-114"><a href="#cb23-114" aria-hidden="true" tabindex="-1"></a>            letters.append(grade_to_letter(grd))</span>
-<span id="cb23-115"><a href="#cb23-115" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> letters</span>
-<span id="cb23-116"><a href="#cb23-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-117"><a href="#cb23-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-118"><a href="#cb23-118" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> letter_distribution(grades, cls<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb23-119"><a href="#cb23-119" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the distribution of letter grades for a(all) class(es)."""</span></span>
-<span id="cb23-120"><a href="#cb23-120" aria-hidden="true" tabindex="-1"></a>    letters <span class="op">=</span> letter_grades(grades, cls)</span>
-<span id="cb23-121"><a href="#cb23-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-122"><a href="#cb23-122" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cls <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb23-123"><a href="#cb23-123" aria-hidden="true" tabindex="-1"></a>        counts <span class="op">=</span> {}</span>
-<span id="cb23-124"><a href="#cb23-124" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> cls_i <span class="kw">in</span> letters:</span>
-<span id="cb23-125"><a href="#cb23-125" aria-hidden="true" tabindex="-1"></a>            counts[cls_i] <span class="op">=</span> count_grades(letters[cls_i])</span>
-<span id="cb23-126"><a href="#cb23-126" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb23-127"><a href="#cb23-127" aria-hidden="true" tabindex="-1"></a>        counts <span class="op">=</span> count_grades(letters)</span>
-<span id="cb23-128"><a href="#cb23-128" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> counts</span>
-<span id="cb23-129"><a href="#cb23-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-130"><a href="#cb23-130" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-131"><a href="#cb23-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-134"><a href="#cb23-134" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-135"><a href="#cb23-135" aria-hidden="true" tabindex="-1"></a><span class="co"># analyze grades (i.e. test functions)</span></span>
-<span id="cb23-136"><a href="#cb23-136" aria-hidden="true" tabindex="-1"></a>print_class(data_grades, classes[<span class="dv">0</span>])</span>
-<span id="cb23-137"><a href="#cb23-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-138"><a href="#cb23-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-139"><a href="#cb23-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-142"><a href="#cb23-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-143"><a href="#cb23-143" aria-hidden="true" tabindex="-1"></a>calc_avg(data_grades, classes[<span class="dv">0</span>])</span>
-<span id="cb23-144"><a href="#cb23-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-145"><a href="#cb23-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-146"><a href="#cb23-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-149"><a href="#cb23-149" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-150"><a href="#cb23-150" aria-hidden="true" tabindex="-1"></a>calc_avg(data_grades)</span>
-<span id="cb23-151"><a href="#cb23-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-152"><a href="#cb23-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-153"><a href="#cb23-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-156"><a href="#cb23-156" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-157"><a href="#cb23-157" aria-hidden="true" tabindex="-1"></a>calc_min_max(data_grades, classes[<span class="dv">0</span>])</span>
-<span id="cb23-158"><a href="#cb23-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-159"><a href="#cb23-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-160"><a href="#cb23-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-163"><a href="#cb23-163" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-164"><a href="#cb23-164" aria-hidden="true" tabindex="-1"></a>calc_min_max(data_grades)</span>
-<span id="cb23-165"><a href="#cb23-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-166"><a href="#cb23-166" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-167"><a href="#cb23-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-170"><a href="#cb23-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-171"><a href="#cb23-171" aria-hidden="true" tabindex="-1"></a>letter_grades(data_grades, classes[<span class="dv">0</span>])</span>
-<span id="cb23-172"><a href="#cb23-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-173"><a href="#cb23-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-174"><a href="#cb23-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-177"><a href="#cb23-177" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-178"><a href="#cb23-178" aria-hidden="true" tabindex="-1"></a>letter_grades(data_grades)</span>
-<span id="cb23-179"><a href="#cb23-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-180"><a href="#cb23-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-181"><a href="#cb23-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-184"><a href="#cb23-184" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-185"><a href="#cb23-185" aria-hidden="true" tabindex="-1"></a>letter_distribution(data_grades, classes[<span class="dv">0</span>])</span>
-<span id="cb23-186"><a href="#cb23-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-187"><a href="#cb23-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-188"><a href="#cb23-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-191"><a href="#cb23-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-192"><a href="#cb23-192" aria-hidden="true" tabindex="-1"></a>letter_distribution(data_grades)</span>
-<span id="cb23-193"><a href="#cb23-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-194"><a href="#cb23-194" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-195"><a href="#cb23-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-196"><a href="#cb23-196" aria-hidden="true" tabindex="-1"></a></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Gradebook </span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">### Import modules</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="co"># import modules</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statistics</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> string</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pp</span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a><span class="fu">### Module constants</span></span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a><span class="co"># module constants</span></span>
+<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb36-30"><a href="#cb36-30" aria-hidden="true" tabindex="-1"></a>PASSWORD <span class="op">=</span> <span class="st">"1234"</span></span>
+<span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a>MENU <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb36-33"><a href="#cb36-33" aria-hidden="true" tabindex="-1"></a><span class="st">---------------------</span></span>
+<span id="cb36-34"><a href="#cb36-34" aria-hidden="true" tabindex="-1"></a><span class="st">Gradebook Manager</span></span>
+<span id="cb36-35"><a href="#cb36-35" aria-hidden="true" tabindex="-1"></a><span class="st">---------------------</span></span>
+<span id="cb36-36"><a href="#cb36-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-37"><a href="#cb36-37" aria-hidden="true" tabindex="-1"></a><span class="ch">\n</span><span class="st">What would you like to do?</span></span>
+<span id="cb36-38"><a href="#cb36-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-39"><a href="#cb36-39" aria-hidden="true" tabindex="-1"></a><span class="st">Analysis</span></span>
+<span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a><span class="st">1. Print class</span></span>
+<span id="cb36-41"><a href="#cb36-41" aria-hidden="true" tabindex="-1"></a><span class="st">2. Class average</span></span>
+<span id="cb36-42"><a href="#cb36-42" aria-hidden="true" tabindex="-1"></a><span class="st">3. Min / Max</span></span>
+<span id="cb36-43"><a href="#cb36-43" aria-hidden="true" tabindex="-1"></a><span class="st">4. Summarize letter distribution</span></span>
+<span id="cb36-44"><a href="#cb36-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-45"><a href="#cb36-45" aria-hidden="true" tabindex="-1"></a><span class="ch">\n</span><span class="st">Modification</span></span>
+<span id="cb36-46"><a href="#cb36-46" aria-hidden="true" tabindex="-1"></a><span class="st">5. Change grade</span></span>
+<span id="cb36-47"><a href="#cb36-47" aria-hidden="true" tabindex="-1"></a><span class="st">6. Add student</span></span>
+<span id="cb36-48"><a href="#cb36-48" aria-hidden="true" tabindex="-1"></a><span class="st">7. Remove student</span></span>
+<span id="cb36-49"><a href="#cb36-49" aria-hidden="true" tabindex="-1"></a><span class="st">8. Add class</span></span>
+<span id="cb36-50"><a href="#cb36-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-51"><a href="#cb36-51" aria-hidden="true" tabindex="-1"></a><span class="ch">\n</span><span class="st">File</span></span>
+<span id="cb36-52"><a href="#cb36-52" aria-hidden="true" tabindex="-1"></a><span class="st">9. Save gradebook</span></span>
+<span id="cb36-53"><a href="#cb36-53" aria-hidden="true" tabindex="-1"></a><span class="st">10. Quit</span></span>
+<span id="cb36-54"><a href="#cb36-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-55"><a href="#cb36-55" aria-hidden="true" tabindex="-1"></a><span class="ch">\n</span><span class="st">Choice: """</span></span>
+<span id="cb36-56"><a href="#cb36-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-57"><a href="#cb36-57" aria-hidden="true" tabindex="-1"></a>MIN_GRADE <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb36-58"><a href="#cb36-58" aria-hidden="true" tabindex="-1"></a>MAX_GRADE <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb36-59"><a href="#cb36-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-60"><a href="#cb36-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-61"><a href="#cb36-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-62"><a href="#cb36-62" aria-hidden="true" tabindex="-1"></a><span class="fu">### Analysis functions</span></span>
+<span id="cb36-63"><a href="#cb36-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-66"><a href="#cb36-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-67"><a href="#cb36-67" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb36-68"><a href="#cb36-68" aria-hidden="true" tabindex="-1"></a><span class="co"># analysis functions</span></span>
+<span id="cb36-69"><a href="#cb36-69" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb36-70"><a href="#cb36-70" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_avg(grades, class_name<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb36-71"><a href="#cb36-71" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the average grade for a(all) class(es)."""</span></span>
+<span id="cb36-72"><a href="#cb36-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> class_name <span class="op">==</span> <span class="st">""</span>:</span>
+<span id="cb36-73"><a href="#cb36-73" aria-hidden="true" tabindex="-1"></a>        mean <span class="op">=</span> {}</span>
+<span id="cb36-74"><a href="#cb36-74" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> class_name_i <span class="kw">in</span> grades:</span>
+<span id="cb36-75"><a href="#cb36-75" aria-hidden="true" tabindex="-1"></a>            mean[class_name_i] <span class="op">=</span> <span class="bu">round</span>(</span>
+<span id="cb36-76"><a href="#cb36-76" aria-hidden="true" tabindex="-1"></a>                statistics.mean(grades[class_name_i].values()), <span class="dv">2</span></span>
+<span id="cb36-77"><a href="#cb36-77" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb36-78"><a href="#cb36-78" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Average grade calculated for all classes."</span>)</span>
+<span id="cb36-79"><a href="#cb36-79" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> class_name <span class="kw">not</span> <span class="kw">in</span> grades:</span>
+<span id="cb36-80"><a href="#cb36-80" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> not found."</span>)</span>
+<span id="cb36-81"><a href="#cb36-81" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb36-82"><a href="#cb36-82" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb36-83"><a href="#cb36-83" aria-hidden="true" tabindex="-1"></a>        mean <span class="op">=</span> <span class="bu">round</span>(statistics.mean(grades[class_name].values()), <span class="dv">2</span>)</span>
+<span id="cb36-84"><a href="#cb36-84" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Average grade calculated for class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb36-85"><a href="#cb36-85" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mean</span>
+<span id="cb36-86"><a href="#cb36-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-87"><a href="#cb36-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-88"><a href="#cb36-88" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_min_max(grades, class_name<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb36-89"><a href="#cb36-89" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the min and max grades for a(all) class(es)."""</span></span>
+<span id="cb36-90"><a href="#cb36-90" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> class_name <span class="op">==</span> <span class="st">""</span>:</span>
+<span id="cb36-91"><a href="#cb36-91" aria-hidden="true" tabindex="-1"></a>        minmax <span class="op">=</span> {}</span>
+<span id="cb36-92"><a href="#cb36-92" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> class_name_i <span class="kw">in</span> grades:</span>
+<span id="cb36-93"><a href="#cb36-93" aria-hidden="true" tabindex="-1"></a>            minmax[class_name_i] <span class="op">=</span> [</span>
+<span id="cb36-94"><a href="#cb36-94" aria-hidden="true" tabindex="-1"></a>                <span class="bu">min</span>(grades[class_name_i].values()),</span>
+<span id="cb36-95"><a href="#cb36-95" aria-hidden="true" tabindex="-1"></a>                <span class="bu">max</span>(grades[class_name_i].values()),</span>
+<span id="cb36-96"><a href="#cb36-96" aria-hidden="true" tabindex="-1"></a>            ]</span>
+<span id="cb36-97"><a href="#cb36-97" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Min and max grades calculated for all classes."</span>)</span>
+<span id="cb36-98"><a href="#cb36-98" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> class_name <span class="kw">not</span> <span class="kw">in</span> grades:</span>
+<span id="cb36-99"><a href="#cb36-99" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> not found."</span>)</span>
+<span id="cb36-100"><a href="#cb36-100" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb36-101"><a href="#cb36-101" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb36-102"><a href="#cb36-102" aria-hidden="true" tabindex="-1"></a>        minmax <span class="op">=</span> [<span class="bu">min</span>(grades[class_name].values()), <span class="bu">max</span>(grades[class_name].values())]</span>
+<span id="cb36-103"><a href="#cb36-103" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Min and max grades calculated for class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb36-104"><a href="#cb36-104" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> minmax</span>
+<span id="cb36-105"><a href="#cb36-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-106"><a href="#cb36-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-107"><a href="#cb36-107" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grade_to_letter(grade):</span>
+<span id="cb36-108"><a href="#cb36-108" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the letter grade corresponding to the numeric grade."""</span></span>
+<span id="cb36-109"><a href="#cb36-109" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> grade <span class="op">&gt;=</span> <span class="dv">90</span>:</span>
+<span id="cb36-110"><a href="#cb36-110" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"A"</span></span>
+<span id="cb36-111"><a href="#cb36-111" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> grade <span class="op">&gt;=</span> <span class="dv">80</span>:</span>
+<span id="cb36-112"><a href="#cb36-112" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"B"</span></span>
+<span id="cb36-113"><a href="#cb36-113" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> grade <span class="op">&gt;=</span> <span class="dv">70</span>:</span>
+<span id="cb36-114"><a href="#cb36-114" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"C"</span></span>
+<span id="cb36-115"><a href="#cb36-115" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> grade <span class="op">&gt;=</span> <span class="dv">60</span>:</span>
+<span id="cb36-116"><a href="#cb36-116" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"D"</span></span>
+<span id="cb36-117"><a href="#cb36-117" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb36-118"><a href="#cb36-118" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"F"</span></span>
+<span id="cb36-119"><a href="#cb36-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-120"><a href="#cb36-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-121"><a href="#cb36-121" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_grades(letters):</span>
+<span id="cb36-122"><a href="#cb36-122" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Count the distribution of letter grades for a(all) class(es)."""</span></span>
+<span id="cb36-123"><a href="#cb36-123" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sorted</span>(Counter(letters).items())</span>
+<span id="cb36-124"><a href="#cb36-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-125"><a href="#cb36-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-126"><a href="#cb36-126" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> letter_grades(grades, class_name<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb36-127"><a href="#cb36-127" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the of letter grades for a(all) class(es)."""</span></span>
+<span id="cb36-128"><a href="#cb36-128" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> class_name <span class="op">==</span> <span class="st">""</span>:</span>
+<span id="cb36-129"><a href="#cb36-129" aria-hidden="true" tabindex="-1"></a>        letters <span class="op">=</span> {}</span>
+<span id="cb36-130"><a href="#cb36-130" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> class_name_i <span class="kw">in</span> grades:</span>
+<span id="cb36-131"><a href="#cb36-131" aria-hidden="true" tabindex="-1"></a>            letters[class_name_i] <span class="op">=</span> [</span>
+<span id="cb36-132"><a href="#cb36-132" aria-hidden="true" tabindex="-1"></a>                grade_to_letter(grd) <span class="cf">for</span> grd <span class="kw">in</span> grades[class_name_i].values()</span>
+<span id="cb36-133"><a href="#cb36-133" aria-hidden="true" tabindex="-1"></a>            ]</span>
+<span id="cb36-134"><a href="#cb36-134" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb36-135"><a href="#cb36-135" aria-hidden="true" tabindex="-1"></a>        letters <span class="op">=</span> []</span>
+<span id="cb36-136"><a href="#cb36-136" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> grd <span class="kw">in</span> grades[class_name].values():</span>
+<span id="cb36-137"><a href="#cb36-137" aria-hidden="true" tabindex="-1"></a>            letters.append(grade_to_letter(grd))</span>
+<span id="cb36-138"><a href="#cb36-138" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> letters</span>
+<span id="cb36-139"><a href="#cb36-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-140"><a href="#cb36-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-141"><a href="#cb36-141" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> letter_distribution(grades, class_name<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb36-142"><a href="#cb36-142" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate the distribution of letter grades for a(all) class(es)."""</span></span>
+<span id="cb36-143"><a href="#cb36-143" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> class_name <span class="op">==</span> <span class="st">""</span> <span class="kw">or</span> class_name <span class="kw">in</span> grades:</span>
+<span id="cb36-144"><a href="#cb36-144" aria-hidden="true" tabindex="-1"></a>        letters <span class="op">=</span> letter_grades(grades, class_name)</span>
+<span id="cb36-145"><a href="#cb36-145" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb36-146"><a href="#cb36-146" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> not found."</span>)</span>
+<span id="cb36-147"><a href="#cb36-147" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> class_name <span class="op">==</span> <span class="st">""</span>:</span>
+<span id="cb36-148"><a href="#cb36-148" aria-hidden="true" tabindex="-1"></a>        counts <span class="op">=</span> {}</span>
+<span id="cb36-149"><a href="#cb36-149" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> class_name_i <span class="kw">in</span> letters:</span>
+<span id="cb36-150"><a href="#cb36-150" aria-hidden="true" tabindex="-1"></a>            counts[class_name_i] <span class="op">=</span> count_grades(letters[class_name_i])</span>
+<span id="cb36-151"><a href="#cb36-151" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Letter grade distribution calculated for all classes."</span>)</span>
+<span id="cb36-152"><a href="#cb36-152" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> class_name <span class="kw">not</span> <span class="kw">in</span> grades:</span>
+<span id="cb36-153"><a href="#cb36-153" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb36-154"><a href="#cb36-154" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb36-155"><a href="#cb36-155" aria-hidden="true" tabindex="-1"></a>        counts <span class="op">=</span> count_grades(letters)</span>
+<span id="cb36-156"><a href="#cb36-156" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Letter grade distribution calculated for class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb36-157"><a href="#cb36-157" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> counts</span>
+<span id="cb36-158"><a href="#cb36-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-159"><a href="#cb36-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-160"><a href="#cb36-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-161"><a href="#cb36-161" aria-hidden="true" tabindex="-1"></a><span class="fu">### Modification functions</span></span>
+<span id="cb36-162"><a href="#cb36-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-165"><a href="#cb36-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-166"><a href="#cb36-166" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb36-167"><a href="#cb36-167" aria-hidden="true" tabindex="-1"></a><span class="co"># modification functions</span></span>
+<span id="cb36-168"><a href="#cb36-168" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb36-169"><a href="#cb36-169" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_class(grades, class_name):</span>
+<span id="cb36-170"><a href="#cb36-170" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Print all students' grades for an existing class"""</span></span>
+<span id="cb36-171"><a href="#cb36-171" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">not</span> <span class="kw">in</span> grades:</span>
+<span id="cb36-172"><a href="#cb36-172" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> not found."</span>)</span>
+<span id="cb36-173"><a href="#cb36-173" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb36-174"><a href="#cb36-174" aria-hidden="true" tabindex="-1"></a>        pp(grades[class_name])</span>
+<span id="cb36-175"><a href="#cb36-175" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Gradebook printed for class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb36-176"><a href="#cb36-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-177"><a href="#cb36-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-178"><a href="#cb36-178" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> change_grade(grades, class_name, student, new_grade):</span>
+<span id="cb36-179"><a href="#cb36-179" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Update a student's grade after checking for existing class / student and valid grade"""</span></span>
+<span id="cb36-180"><a href="#cb36-180" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">not</span> <span class="kw">in</span> grades:</span>
+<span id="cb36-181"><a href="#cb36-181" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> not found."</span>)</span>
+<span id="cb36-182"><a href="#cb36-182" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> student <span class="kw">not</span> <span class="kw">in</span> grades[class_name]:</span>
+<span id="cb36-183"><a href="#cb36-183" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Student </span><span class="sc">{</span>student<span class="sc">}</span><span class="ss"> not found in class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb36-184"><a href="#cb36-184" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="kw">not</span> MIN_GRADE <span class="op">&lt;=</span> new_grade <span class="op">&lt;=</span> MAX_GRADE:</span>
+<span id="cb36-185"><a href="#cb36-185" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"New grade of </span><span class="sc">{</span>new_grade<span class="sc">}</span><span class="ss"> is not valid."</span>)</span>
+<span id="cb36-186"><a href="#cb36-186" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb36-187"><a href="#cb36-187" aria-hidden="true" tabindex="-1"></a>        grades[class_name][student] <span class="op">=</span> new_grade</span>
+<span id="cb36-188"><a href="#cb36-188" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Grade for student </span><span class="sc">{</span>student<span class="sc">}</span><span class="ss"> in class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> changed."</span>)</span>
+<span id="cb36-189"><a href="#cb36-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-190"><a href="#cb36-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-191"><a href="#cb36-191" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_student(grades, class_name, student, grade):</span>
+<span id="cb36-192"><a href="#cb36-192" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Add a new student to an existing class and set grade"""</span></span>
+<span id="cb36-193"><a href="#cb36-193" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">not</span> <span class="kw">in</span> grades:</span>
+<span id="cb36-194"><a href="#cb36-194" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> not found"</span>)</span>
+<span id="cb36-195"><a href="#cb36-195" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> student <span class="kw">in</span> grades[class_name]:</span>
+<span id="cb36-196"><a href="#cb36-196" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"student </span><span class="sc">{</span>student<span class="sc">}</span><span class="ss"> is already in class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb36-197"><a href="#cb36-197" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="kw">not</span> <span class="dv">0</span> <span class="op">&lt;=</span> grade <span class="op">&lt;=</span> <span class="dv">100</span>:</span>
+<span id="cb36-198"><a href="#cb36-198" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"new grade of </span><span class="sc">{</span>grade<span class="sc">}</span><span class="ss"> is not valid"</span>)</span>
+<span id="cb36-199"><a href="#cb36-199" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb36-200"><a href="#cb36-200" aria-hidden="true" tabindex="-1"></a>        grades[class_name][student] <span class="op">=</span> grade</span>
+<span id="cb36-201"><a href="#cb36-201" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Student </span><span class="sc">{</span>student<span class="sc">}</span><span class="ss"> added in class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb36-202"><a href="#cb36-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-203"><a href="#cb36-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-204"><a href="#cb36-204" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> remove_student(grades, class_name, student):</span>
+<span id="cb36-205"><a href="#cb36-205" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Remove an existing student from an existing class"""</span></span>
+<span id="cb36-206"><a href="#cb36-206" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">not</span> <span class="kw">in</span> grades:</span>
+<span id="cb36-207"><a href="#cb36-207" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> not found"</span>)</span>
+<span id="cb36-208"><a href="#cb36-208" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> student <span class="kw">not</span> <span class="kw">in</span> grades[class_name]:</span>
+<span id="cb36-209"><a href="#cb36-209" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"student </span><span class="sc">{</span>student<span class="sc">}</span><span class="ss"> not found in class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb36-210"><a href="#cb36-210" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb36-211"><a href="#cb36-211" aria-hidden="true" tabindex="-1"></a>        <span class="kw">del</span> grades[class_name][student]</span>
+<span id="cb36-212"><a href="#cb36-212" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Student </span><span class="sc">{</span>student<span class="sc">}</span><span class="ss"> removed from class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb36-213"><a href="#cb36-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-214"><a href="#cb36-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-215"><a href="#cb36-215" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_class(grades, class_name):</span>
+<span id="cb36-216"><a href="#cb36-216" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Add a new class to the gradebook"""</span></span>
+<span id="cb36-217"><a href="#cb36-217" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> class_name <span class="kw">in</span> grades:</span>
+<span id="cb36-218"><a href="#cb36-218" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> is already in gradebook"</span>)</span>
+<span id="cb36-219"><a href="#cb36-219" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb36-220"><a href="#cb36-220" aria-hidden="true" tabindex="-1"></a>        grades[class_name] <span class="op">=</span> {}</span>
+<span id="cb36-221"><a href="#cb36-221" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> added to gradebook."</span>)</span>
+<span id="cb36-222"><a href="#cb36-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-223"><a href="#cb36-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-224"><a href="#cb36-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-225"><a href="#cb36-225" aria-hidden="true" tabindex="-1"></a><span class="fu">### File i/o functions</span></span>
+<span id="cb36-226"><a href="#cb36-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-229"><a href="#cb36-229" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-230"><a href="#cb36-230" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb36-231"><a href="#cb36-231" aria-hidden="true" tabindex="-1"></a><span class="co"># file i/o functions</span></span>
+<span id="cb36-232"><a href="#cb36-232" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb36-233"><a href="#cb36-233" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_gradebook(classes):</span>
+<span id="cb36-234"><a href="#cb36-234" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Generate gradebook for X number of classes, each with a random number of student, grade pairs"""</span></span>
+<span id="cb36-235"><a href="#cb36-235" aria-hidden="true" tabindex="-1"></a>    grades <span class="op">=</span> {}</span>
+<span id="cb36-236"><a href="#cb36-236" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> class_name <span class="kw">in</span> classes:</span>
+<span id="cb36-237"><a href="#cb36-237" aria-hidden="true" tabindex="-1"></a>        n_students <span class="op">=</span> random.randint(a<span class="op">=</span><span class="dv">10</span>, b<span class="op">=</span><span class="dv">25</span>)</span>
+<span id="cb36-238"><a href="#cb36-238" aria-hidden="true" tabindex="-1"></a>        names <span class="op">=</span> [</span>
+<span id="cb36-239"><a href="#cb36-239" aria-hidden="true" tabindex="-1"></a>            <span class="st">""</span>.join(random.choices(population<span class="op">=</span>string.ascii_uppercase, k<span class="op">=</span><span class="dv">2</span>))</span>
+<span id="cb36-240"><a href="#cb36-240" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_students)</span>
+<span id="cb36-241"><a href="#cb36-241" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb36-242"><a href="#cb36-242" aria-hidden="true" tabindex="-1"></a>        grds <span class="op">=</span> np.<span class="bu">round</span>(</span>
+<span id="cb36-243"><a href="#cb36-243" aria-hidden="true" tabindex="-1"></a>            np.random.normal(loc<span class="op">=</span>random.randint(a<span class="op">=</span><span class="dv">70</span>, b<span class="op">=</span><span class="dv">80</span>), scale<span class="op">=</span><span class="dv">5</span>, size<span class="op">=</span>n_students),</span>
+<span id="cb36-244"><a href="#cb36-244" aria-hidden="true" tabindex="-1"></a>            <span class="dv">1</span>,</span>
+<span id="cb36-245"><a href="#cb36-245" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb36-246"><a href="#cb36-246" aria-hidden="true" tabindex="-1"></a>        grades[class_name] <span class="op">=</span> <span class="bu">dict</span>(<span class="bu">zip</span>(names, grds))</span>
+<span id="cb36-247"><a href="#cb36-247" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> grades</span>
+<span id="cb36-248"><a href="#cb36-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-249"><a href="#cb36-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-250"><a href="#cb36-250" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> save_gradebook(grades, file_name):</span>
+<span id="cb36-251"><a href="#cb36-251" aria-hidden="true" tabindex="-1"></a>    <span class="co"># with open(filename, mode="w") as file: # manually write csv file</span></span>
+<span id="cb36-252"><a href="#cb36-252" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     file.write("class_name,student,grade\n")</span></span>
+<span id="cb36-253"><a href="#cb36-253" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     for class_name, students in grades.items():</span></span>
+<span id="cb36-254"><a href="#cb36-254" aria-hidden="true" tabindex="-1"></a>    <span class="co">#         for student, grade in students.items():</span></span>
+<span id="cb36-255"><a href="#cb36-255" aria-hidden="true" tabindex="-1"></a>    <span class="co">#             file.write(f"{class_name},{student},{grade}\n")</span></span>
+<span id="cb36-256"><a href="#cb36-256" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_name, mode<span class="op">=</span><span class="st">"w"</span>, newline<span class="op">=</span><span class="st">""</span>) <span class="im">as</span> <span class="bu">file</span>:  <span class="co"># now using csv</span></span>
+<span id="cb36-257"><a href="#cb36-257" aria-hidden="true" tabindex="-1"></a>        writer <span class="op">=</span> csv.writer(<span class="bu">file</span>)</span>
+<span id="cb36-258"><a href="#cb36-258" aria-hidden="true" tabindex="-1"></a>        writer.writerow([<span class="st">"class"</span>, <span class="st">"student"</span>, <span class="st">"grade"</span>])</span>
+<span id="cb36-259"><a href="#cb36-259" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> class_name, students <span class="kw">in</span> grades.items():</span>
+<span id="cb36-260"><a href="#cb36-260" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> student, grade <span class="kw">in</span> students.items():</span>
+<span id="cb36-261"><a href="#cb36-261" aria-hidden="true" tabindex="-1"></a>                writer.writerow([class_name, student, grade])</span>
+<span id="cb36-262"><a href="#cb36-262" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Gradebook saved as </span><span class="sc">{</span>file_name<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb36-263"><a href="#cb36-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-264"><a href="#cb36-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-265"><a href="#cb36-265" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_gradebook(file_name):</span>
+<span id="cb36-266"><a href="#cb36-266" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Load gradebook and output as a nested dictionary"""</span></span>
+<span id="cb36-267"><a href="#cb36-267" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_name, <span class="st">"r"</span>, newline<span class="op">=</span><span class="st">""</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb36-268"><a href="#cb36-268" aria-hidden="true" tabindex="-1"></a>        grades <span class="op">=</span> {}</span>
+<span id="cb36-269"><a href="#cb36-269" aria-hidden="true" tabindex="-1"></a>        reader <span class="op">=</span> csv.reader(<span class="bu">file</span>)</span>
+<span id="cb36-270"><a href="#cb36-270" aria-hidden="true" tabindex="-1"></a>        <span class="bu">next</span>(reader)</span>
+<span id="cb36-271"><a href="#cb36-271" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> row <span class="kw">in</span> reader:</span>
+<span id="cb36-272"><a href="#cb36-272" aria-hidden="true" tabindex="-1"></a>            class_name <span class="op">=</span> row[<span class="dv">0</span>]</span>
+<span id="cb36-273"><a href="#cb36-273" aria-hidden="true" tabindex="-1"></a>            student <span class="op">=</span> row[<span class="dv">1</span>]</span>
+<span id="cb36-274"><a href="#cb36-274" aria-hidden="true" tabindex="-1"></a>            grade <span class="op">=</span> <span class="bu">float</span>(row[<span class="dv">2</span>])</span>
+<span id="cb36-275"><a href="#cb36-275" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> class_name <span class="kw">not</span> <span class="kw">in</span> grades:</span>
+<span id="cb36-276"><a href="#cb36-276" aria-hidden="true" tabindex="-1"></a>                grades[class_name] <span class="op">=</span> {}</span>
+<span id="cb36-277"><a href="#cb36-277" aria-hidden="true" tabindex="-1"></a>            grades[class_name][student] <span class="op">=</span> grade</span>
+<span id="cb36-278"><a href="#cb36-278" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Gradebook </span><span class="sc">{</span>file_name<span class="sc">}</span><span class="ss"> loaded."</span>)</span>
+<span id="cb36-279"><a href="#cb36-279" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> grades</span>
+<span id="cb36-280"><a href="#cb36-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-281"><a href="#cb36-281" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-282"><a href="#cb36-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-283"><a href="#cb36-283" aria-hidden="true" tabindex="-1"></a><span class="fu">### Application function</span></span>
+<span id="cb36-284"><a href="#cb36-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-287"><a href="#cb36-287" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-288"><a href="#cb36-288" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb36-289"><a href="#cb36-289" aria-hidden="true" tabindex="-1"></a><span class="co"># application function</span></span>
+<span id="cb36-290"><a href="#cb36-290" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb36-291"><a href="#cb36-291" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> manage_gradebook(grades, pwd, menu<span class="op">=</span>MENU):</span>
+<span id="cb36-292"><a href="#cb36-292" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pwd <span class="op">!=</span> PASSWORD:</span>
+<span id="cb36-293"><a href="#cb36-293" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"password is not correct"</span>)</span>
+<span id="cb36-294"><a href="#cb36-294" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb36-295"><a href="#cb36-295" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> menu <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> MIN_GRADE <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> MAX_GRADE <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb36-296"><a href="#cb36-296" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(</span>
+<span id="cb36-297"><a href="#cb36-297" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Please run line setting the default value(s) for menu and min/max grade."</span></span>
+<span id="cb36-298"><a href="#cb36-298" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb36-299"><a href="#cb36-299" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb36-300"><a href="#cb36-300" aria-hidden="true" tabindex="-1"></a>            choice <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb36-301"><a href="#cb36-301" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> choice <span class="op">!=</span> <span class="st">"10"</span>:</span>
+<span id="cb36-302"><a href="#cb36-302" aria-hidden="true" tabindex="-1"></a>                choice <span class="op">=</span> <span class="bu">input</span>(menu)</span>
+<span id="cb36-303"><a href="#cb36-303" aria-hidden="true" tabindex="-1"></a>                <span class="cf">match</span> choice:</span>
+<span id="cb36-304"><a href="#cb36-304" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"1"</span>:</span>
+<span id="cb36-305"><a href="#cb36-305" aria-hidden="true" tabindex="-1"></a>                        class_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Class name: "</span>)</span>
+<span id="cb36-306"><a href="#cb36-306" aria-hidden="true" tabindex="-1"></a>                        print_class(grades, class_name<span class="op">=</span>class_name)</span>
+<span id="cb36-307"><a href="#cb36-307" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb36-308"><a href="#cb36-308" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"2"</span>:</span>
+<span id="cb36-309"><a href="#cb36-309" aria-hidden="true" tabindex="-1"></a>                        class_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Class name: "</span>)</span>
+<span id="cb36-310"><a href="#cb36-310" aria-hidden="true" tabindex="-1"></a>                        avg <span class="op">=</span> calc_avg(grades, class_name<span class="op">=</span>class_name)</span>
+<span id="cb36-311"><a href="#cb36-311" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">print</span>(avg)</span>
+<span id="cb36-312"><a href="#cb36-312" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb36-313"><a href="#cb36-313" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"3"</span>:</span>
+<span id="cb36-314"><a href="#cb36-314" aria-hidden="true" tabindex="-1"></a>                        class_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Class name: "</span>)</span>
+<span id="cb36-315"><a href="#cb36-315" aria-hidden="true" tabindex="-1"></a>                        min_max <span class="op">=</span> calc_min_max(grades, class_name<span class="op">=</span>class_name)</span>
+<span id="cb36-316"><a href="#cb36-316" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">print</span>(min_max)</span>
+<span id="cb36-317"><a href="#cb36-317" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb36-318"><a href="#cb36-318" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"4"</span>:</span>
+<span id="cb36-319"><a href="#cb36-319" aria-hidden="true" tabindex="-1"></a>                        class_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Class name: "</span>)</span>
+<span id="cb36-320"><a href="#cb36-320" aria-hidden="true" tabindex="-1"></a>                        letter_dist <span class="op">=</span> letter_distribution(grades, class_name<span class="op">=</span>class_name)</span>
+<span id="cb36-321"><a href="#cb36-321" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">print</span>(letter_dist)</span>
+<span id="cb36-322"><a href="#cb36-322" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb36-323"><a href="#cb36-323" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"5"</span>:</span>
+<span id="cb36-324"><a href="#cb36-324" aria-hidden="true" tabindex="-1"></a>                        class_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Class name: "</span>)</span>
+<span id="cb36-325"><a href="#cb36-325" aria-hidden="true" tabindex="-1"></a>                        student_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Student name: "</span>)</span>
+<span id="cb36-326"><a href="#cb36-326" aria-hidden="true" tabindex="-1"></a>                        new_grade <span class="op">=</span> <span class="bu">float</span>(<span class="bu">input</span>(<span class="st">"New grade: "</span>))</span>
+<span id="cb36-327"><a href="#cb36-327" aria-hidden="true" tabindex="-1"></a>                        change_grade(</span>
+<span id="cb36-328"><a href="#cb36-328" aria-hidden="true" tabindex="-1"></a>                            grades,</span>
+<span id="cb36-329"><a href="#cb36-329" aria-hidden="true" tabindex="-1"></a>                            class_name<span class="op">=</span>class_name,</span>
+<span id="cb36-330"><a href="#cb36-330" aria-hidden="true" tabindex="-1"></a>                            student<span class="op">=</span>student_name,</span>
+<span id="cb36-331"><a href="#cb36-331" aria-hidden="true" tabindex="-1"></a>                            new_grade<span class="op">=</span>new_grade,</span>
+<span id="cb36-332"><a href="#cb36-332" aria-hidden="true" tabindex="-1"></a>                        )</span>
+<span id="cb36-333"><a href="#cb36-333" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb36-334"><a href="#cb36-334" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"6"</span>:</span>
+<span id="cb36-335"><a href="#cb36-335" aria-hidden="true" tabindex="-1"></a>                        class_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Class name: "</span>)</span>
+<span id="cb36-336"><a href="#cb36-336" aria-hidden="true" tabindex="-1"></a>                        student_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Student name: "</span>)</span>
+<span id="cb36-337"><a href="#cb36-337" aria-hidden="true" tabindex="-1"></a>                        grade <span class="op">=</span> <span class="bu">float</span>(<span class="bu">input</span>(<span class="st">"Grade: "</span>))</span>
+<span id="cb36-338"><a href="#cb36-338" aria-hidden="true" tabindex="-1"></a>                        add_student(</span>
+<span id="cb36-339"><a href="#cb36-339" aria-hidden="true" tabindex="-1"></a>                            grades,</span>
+<span id="cb36-340"><a href="#cb36-340" aria-hidden="true" tabindex="-1"></a>                            class_name<span class="op">=</span>class_name,</span>
+<span id="cb36-341"><a href="#cb36-341" aria-hidden="true" tabindex="-1"></a>                            student<span class="op">=</span>student_name,</span>
+<span id="cb36-342"><a href="#cb36-342" aria-hidden="true" tabindex="-1"></a>                            grade<span class="op">=</span>grade,</span>
+<span id="cb36-343"><a href="#cb36-343" aria-hidden="true" tabindex="-1"></a>                        )</span>
+<span id="cb36-344"><a href="#cb36-344" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb36-345"><a href="#cb36-345" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"7"</span>:</span>
+<span id="cb36-346"><a href="#cb36-346" aria-hidden="true" tabindex="-1"></a>                        class_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Class name: "</span>)</span>
+<span id="cb36-347"><a href="#cb36-347" aria-hidden="true" tabindex="-1"></a>                        student_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Student name: "</span>)</span>
+<span id="cb36-348"><a href="#cb36-348" aria-hidden="true" tabindex="-1"></a>                        remove_student(</span>
+<span id="cb36-349"><a href="#cb36-349" aria-hidden="true" tabindex="-1"></a>                            grades, class_name<span class="op">=</span>class_name, student<span class="op">=</span>student_name</span>
+<span id="cb36-350"><a href="#cb36-350" aria-hidden="true" tabindex="-1"></a>                        )</span>
+<span id="cb36-351"><a href="#cb36-351" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb36-352"><a href="#cb36-352" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"8"</span>:</span>
+<span id="cb36-353"><a href="#cb36-353" aria-hidden="true" tabindex="-1"></a>                        class_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Class name: "</span>)</span>
+<span id="cb36-354"><a href="#cb36-354" aria-hidden="true" tabindex="-1"></a>                        add_class(grades, class_name<span class="op">=</span>class_name)</span>
+<span id="cb36-355"><a href="#cb36-355" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb36-356"><a href="#cb36-356" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"9"</span>:</span>
+<span id="cb36-357"><a href="#cb36-357" aria-hidden="true" tabindex="-1"></a>                        file_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Filename: "</span>)</span>
+<span id="cb36-358"><a href="#cb36-358" aria-hidden="true" tabindex="-1"></a>                        save_gradebook(grades, file_name<span class="op">=</span>file_name)</span>
+<span id="cb36-359"><a href="#cb36-359" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb36-360"><a href="#cb36-360" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> <span class="st">"10"</span>:</span>
+<span id="cb36-361"><a href="#cb36-361" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">print</span>(<span class="st">"Goodbye!"</span>)</span>
+<span id="cb36-362"><a href="#cb36-362" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">case</span> _:</span>
+<span id="cb36-363"><a href="#cb36-363" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">print</span>(<span class="st">"Invalid choice."</span>)</span>
+<span id="cb36-364"><a href="#cb36-364" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">input</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Press Enter to continue..."</span>)</span>
+<span id="cb36-365"><a href="#cb36-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-366"><a href="#cb36-366" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb36-367"><a href="#cb36-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-368"><a href="#cb36-368" aria-hidden="true" tabindex="-1"></a><span class="co">### Manage gradebook</span></span>
+<span id="cb36-369"><a href="#cb36-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-370"><a href="#cb36-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-371"><a href="#cb36-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-374"><a href="#cb36-374" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-375"><a href="#cb36-375" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb36-376"><a href="#cb36-376" aria-hidden="true" tabindex="-1"></a><span class="co"># manage gradebook</span></span>
+<span id="cb36-377"><a href="#cb36-377" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------</span></span>
+<span id="cb36-378"><a href="#cb36-378" aria-hidden="true" tabindex="-1"></a><span class="co"># option 1: generate gradebook</span></span>
+<span id="cb36-379"><a href="#cb36-379" aria-hidden="true" tabindex="-1"></a>classes <span class="op">=</span> [<span class="ss">f"math125-00</span><span class="sc">{</span>section<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> section <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">4</span>)]</span>
+<span id="cb36-380"><a href="#cb36-380" aria-hidden="true" tabindex="-1"></a>classes.append(<span class="st">"math320-001"</span>)</span>
+<span id="cb36-381"><a href="#cb36-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-382"><a href="#cb36-382" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb36-383"><a href="#cb36-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-386"><a href="#cb36-386" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-387"><a href="#cb36-387" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb36-388"><a href="#cb36-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-389"><a href="#cb36-389" aria-hidden="true" tabindex="-1"></a>data_grades <span class="op">=</span> generate_gradebook(classes)</span>
+<span id="cb36-390"><a href="#cb36-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-391"><a href="#cb36-391" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb36-392"><a href="#cb36-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-395"><a href="#cb36-395" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-396"><a href="#cb36-396" aria-hidden="true" tabindex="-1"></a><span class="co"># option 2: load gradebook</span></span>
+<span id="cb36-397"><a href="#cb36-397" aria-hidden="true" tabindex="-1"></a>data_grades <span class="op">=</span> load_gradebook(<span class="st">"files//gradebook.csv"</span>)</span>
+<span id="cb36-398"><a href="#cb36-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-399"><a href="#cb36-399" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb36-400"><a href="#cb36-400" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-403"><a href="#cb36-403" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-404"><a href="#cb36-404" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb36-405"><a href="#cb36-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-406"><a href="#cb36-406" aria-hidden="true" tabindex="-1"></a><span class="co"># NOT RUN!!! interactive console application</span></span>
+<span id="cb36-407"><a href="#cb36-407" aria-hidden="true" tabindex="-1"></a><span class="co"># manage gradebook</span></span>
+<span id="cb36-408"><a href="#cb36-408" aria-hidden="true" tabindex="-1"></a>manage_gradebook(data_grades, pwd<span class="op">=</span>PASSWORD)</span>
+<span id="cb36-409"><a href="#cb36-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-410"><a href="#cb36-410" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb36-411"><a href="#cb36-411" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-414"><a href="#cb36-414" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-415"><a href="#cb36-415" aria-hidden="true" tabindex="-1"></a><span class="co"># analyze grades (i.e. test functions)</span></span>
+<span id="cb36-416"><a href="#cb36-416" aria-hidden="true" tabindex="-1"></a>print_class(data_grades, classes[<span class="dv">0</span>])</span>
+<span id="cb36-417"><a href="#cb36-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-418"><a href="#cb36-418" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb36-419"><a href="#cb36-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-422"><a href="#cb36-422" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-423"><a href="#cb36-423" aria-hidden="true" tabindex="-1"></a>calc_avg(data_grades, classes[<span class="dv">0</span>])</span>
+<span id="cb36-424"><a href="#cb36-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-425"><a href="#cb36-425" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb36-426"><a href="#cb36-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-429"><a href="#cb36-429" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-430"><a href="#cb36-430" aria-hidden="true" tabindex="-1"></a>calc_avg(data_grades)</span>
+<span id="cb36-431"><a href="#cb36-431" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-432"><a href="#cb36-432" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb36-433"><a href="#cb36-433" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-436"><a href="#cb36-436" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-437"><a href="#cb36-437" aria-hidden="true" tabindex="-1"></a>calc_min_max(data_grades, classes[<span class="dv">0</span>])</span>
+<span id="cb36-438"><a href="#cb36-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-439"><a href="#cb36-439" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb36-440"><a href="#cb36-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-443"><a href="#cb36-443" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-444"><a href="#cb36-444" aria-hidden="true" tabindex="-1"></a>calc_min_max(data_grades)</span>
+<span id="cb36-445"><a href="#cb36-445" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-446"><a href="#cb36-446" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb36-447"><a href="#cb36-447" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-450"><a href="#cb36-450" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-451"><a href="#cb36-451" aria-hidden="true" tabindex="-1"></a>letter_grades(data_grades, classes[<span class="dv">0</span>])</span>
+<span id="cb36-452"><a href="#cb36-452" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-453"><a href="#cb36-453" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb36-454"><a href="#cb36-454" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-457"><a href="#cb36-457" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-458"><a href="#cb36-458" aria-hidden="true" tabindex="-1"></a>letter_grades(data_grades)</span>
+<span id="cb36-459"><a href="#cb36-459" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-460"><a href="#cb36-460" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb36-461"><a href="#cb36-461" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-464"><a href="#cb36-464" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-465"><a href="#cb36-465" aria-hidden="true" tabindex="-1"></a>letter_distribution(data_grades, classes[<span class="dv">0</span>])</span>
+<span id="cb36-466"><a href="#cb36-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-467"><a href="#cb36-467" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb36-468"><a href="#cb36-468" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-471"><a href="#cb36-471" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb36-472"><a href="#cb36-472" aria-hidden="true" tabindex="-1"></a>letter_distribution(data_grades)</span>
+<span id="cb36-473"><a href="#cb36-473" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-474"><a href="#cb36-474" aria-hidden="true" tabindex="-1"></a>```</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
