@@ -25,6 +25,8 @@ import numpy as np
 # ---------------------------------------
 # module constants
 # ---------------------------------------
+# -> these are global constants that function rely on
+# -> they are never to change values, and thus aren't needed to be given as parameters
 PASSWORD = "1234"
 
 MENU = """
@@ -66,16 +68,22 @@ MAX_GRADE = 100
 # ---------------------------------------
 def calc_avg(grades, class_name=None):
     """Calculate the average grade for a(all) class(es)."""
+    # if no class is specified, calculate for all classes
     if class_name is None or class_name == "":
+        # initialize dict
         mean = {}
+        # loop through all classes
         for class_name_i in grades:
+            # add key, value pair for class name and avg grade to mean dict
             mean[class_name_i] = round(
                 statistics.mean(grades[class_name_i].values()), 2
             )
         print("Average grade calculated for all classes.")
+    # check for valid class
     elif class_name not in grades:
         print(f"Class {class_name} not found.")
         return
+    # if valid, then calculate for the given class
     else:
         mean = round(statistics.mean(grades[class_name].values()), 2)
         print(f"Average grade calculated for class {class_name}.")
@@ -117,6 +125,7 @@ def grade_to_letter(grade):
 
 def count_grades(letters):
     """Count the distribution of letter grades for a(all) class(es)."""
+    # aggregate the letter grades and sort
     return sorted(Counter(letters).items())
 
 
@@ -125,6 +134,9 @@ def letter_grades(grades, class_name=None):
     if class_name is None or class_name == "":
         letters = {}
         for class_name_i in grades:
+            # for each numeric grade in grades, calculate the letter grade
+            # list comprehension -> [expression for item in iterable if condition]
+            # --> the `if` part is optional, it iterates over only items that meet the condition
             letters[class_name_i] = [
                 grade_to_letter(grd) for grd in grades[class_name_i].values()
             ]
@@ -137,17 +149,21 @@ def letter_grades(grades, class_name=None):
 
 def letter_distribution(grades, class_name=None):
     """Calculate the distribution of letter grades for a(all) class(es)."""
+    # calculate the letter grades for the necessary (valid) classes
     if class_name is None or class_name == "" or class_name in grades:
         letters = letter_grades(grades, class_name)
     else:
         print(f"Class {class_name} not found.")
+    # aggregrate for all classes
     if class_name is None or class_name == "":
         counts = {}
         for class_name_i in letters:
             counts[class_name_i] = count_grades(letters[class_name_i])
         print("Letter grade distribution calculated for all classes.")
+    # return nothing if not valid class name
     elif class_name not in grades:
         return
+    # aggregate for a class
     else:
         counts = count_grades(letters)
         print(f"Letter grade distribution calculated for class {class_name}.")
@@ -164,8 +180,10 @@ def letter_distribution(grades, class_name=None):
 # ---------------------------------------
 def print_class(grades, class_name):
     """Print all students' grades for an existing class"""
+    # non-valid class name
     if class_name not in grades:
         print(f"Class {class_name} not found.")
+    # valid class name
     else:
         pp(grades[class_name])
         print(f"Gradebook printed for class {class_name}.")
@@ -222,8 +240,6 @@ def add_class(grades, class_name):
 
 ```{python}
 
-
-
 # ---------------------------------------
 # file i/o functions
 # ---------------------------------------
@@ -232,24 +248,36 @@ def generate_gradebook(classes):
     grades = {}
     for class_name in classes:
         n_students = random.randint(a=10, b=25)
+        # list comprehension again
+        # -> join is a method of a string (hence the "".)
+        # -> random.choices() returns a list of the random sample from a particular population, in this case the set of uppercase letters
+        # -> the for loop repeats this n_students times
+        # --> for _ is a throwaway variable name (so just repeat an action n times) and the range() specifies how many times (it's an iterable)
         names = [
             "".join(random.choices(population=string.ascii_uppercase, k=2))
             for _ in range(n_students)
         ]
+        # generate random grades, each class can have a different normal curve
         grds = np.round(
             np.random.normal(loc=random.randint(a=70, b=80), scale=5, size=n_students),
             1,
         )
+        # pair together two lists into a dict with dict(zip())
         grades[class_name] = dict(zip(names, grds))
     return grades
 
 
 def save_gradebook(grades, file_name):
-    # with open(filename, mode="w") as file: # manually write csv file
+    """Save gradebook as csv file."""
+    # manually write csv file
+    # -> i.e. just writing a long string separated with variables separated by commas and then with new lines
+    # with open(filename, mode="w") as file:
     #     file.write("class_name,student,grade\n")
     #     for class_name, students in grades.items():
     #         for student, grade in students.items():
     #             file.write(f"{class_name},{student},{grade}\n")
+    # use a csv writer
+    # -> handles the separateing variables with commas for us, and the new lines
     with open(file_name, mode="w", newline="") as file:  # now using csv
         writer = csv.writer(file)
         writer.writerow(["class", "student", "grade"])
@@ -261,16 +289,22 @@ def save_gradebook(grades, file_name):
 
 def load_gradebook(file_name):
     """Load gradebook and output as a nested dictionary"""
+    # -> now use file reader, similar syntax to the writer
     with open(file_name, "r", newline="") as file:
         grades = {}
         reader = csv.reader(file)
+        # skip the header row (i.e. move the pointer (reader) down a line with next())
         next(reader)
+        # loop through all remaining rows
         for row in reader:
+            # save values as temporary (readable) values
             class_name = row[0]
             student = row[1]
             grade = float(row[2])
+            # create new class if needed
             if class_name not in grades:
                 grades[class_name] = {}
+            # assign complete row of data to a correctly formatted dict
             grades[class_name][student] = grade
     print(f"Gradebook {file_name} loaded.")
     return grades
@@ -285,21 +319,35 @@ def load_gradebook(file_name):
 # application function
 # ---------------------------------------
 def manage_gradebook(grades, pwd, menu=MENU):
+    """Interactive console application to manage gradebook."""
+    # this function is a dispatcher function
+    # -> i.e. it is a central router / traffic controller
+    # -> essentially determines what work needs to be done and passes the needed information to the correct helper (the actual doer) function
+    # check for correct password
     if pwd != PASSWORD:
         print("password is not correct")
+    # continue if correct
     else:
+        # check for loaded global strings
         if menu is None or MIN_GRADE is None or MAX_GRADE is None:
             print(
                 "Please run line setting the default value(s) for menu and min/max grade."
             )
+        # continue if loaded
         else:
+            # initialize user input variable to start while loop
             choice = ""
+            # continue to return to menu input as long as the 'quit' option is not selected
             while choice != "10":
                 choice = input(menu)
+                # match is like a built in case when, to check for a certain value and then do something accordingly
                 match choice:
                     case "1":
+                        # ask for next input
                         class_name = input("Class name: ")
+                        # run required function
                         print_class(grades, class_name=class_name)
+                        # output intermediary message to prompt next menu
                         input("\nPress Enter to continue...")
                     case "2":
                         class_name = input("Class name: ")
@@ -355,6 +403,7 @@ def manage_gradebook(grades, pwd, menu=MENU):
                         input("\nPress Enter to continue...")
                     case "10":
                         print("Goodbye!")
+                    # else choice
                     case _:
                         print("Invalid choice.")
                         input("\nPress Enter to continue...")
@@ -363,14 +412,13 @@ def manage_gradebook(grades, pwd, menu=MENU):
 
 ### Manage gradebook
 
-
-
 ```{python}
 
 # ---------------------------------------
 # manage gradebook
 # ---------------------------------------
 # option 1: generate gradebook
+# -> list comprehension to generate class names programmatically
 classes = [f"math125-00{section}" for section in range(1, 4)]
 classes.append("math320-001")
 

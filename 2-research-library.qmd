@@ -1,0 +1,429 @@
+# Research library 
+
+### Import modules
+
+```{python}
+
+# ---------------------------------------
+# import modules
+# ---------------------------------------
+import copy
+import json
+import random
+import string
+
+```
+
+### Module constants
+
+```{python}
+
+# ---------------------------------------
+# module constants
+# ---------------------------------------
+RESEARCH_PAPER_TITLES = (
+    "Non-parametric Inference in High-Dimensional Heteroscedastic Environments",
+    "Adaptive Bandwidth Selection for Density Estimation under Dependent Sampling",
+    "Variance Reduction Techniques in Monte Carlo Tree Search via Control Variates",
+    "Asymptotic Normality of Sparse Graphical Model Estimators with Misspecified Prior Distributions",
+    "Robust Covariance Estimation in the Presence of Heavy-Tailed Measurement Error",
+    "Empirical Bayes Approaches to False Discovery Rate Control in Massive Parallel Testing",
+    "Minimax Rates of Convergence for Non-linear Functional Data Analysis",
+    "Spatiotemporal Autoregressive Models for Non-Gaussian Spatial point Processes",
+    "Optimal Transport Metrics for Model Selection in High-Dimensional Time Series",
+    "Bootstrap Methods for Causal Effect Bounds under Non-ignorable Missing Data",
+    "Quantile Regression for Survival Analysis with Competing Risks and Censoring",
+    "Convergence Rates of Markov Chain Monte Carlo Samplers in Multimodal Posterior Landscapes",
+    "Shrinkage Estimation in High-Dimensional Structural Equation Models",
+    "Permutation Tests for Independence in Complex Networks under Degree Constraints",
+    "Sub-sampling Strategies for Fast Stochastic Gradient Descent in Large-Scale Generalized Linear Models",
+)
+
+IDS = [f"paper-{num:02d}" for num in range(1, len(RESEARCH_PAPER_TITLES) + 1)]
+
+JOURNALS = ("Statistics ABC", "Statistics DEF", "Statistics GHI")
+
+STATUSES = ("to read", "reading", "finished")
+
+PASSWORD = "1234"
+
+MENU = """
+---------------------
+Research Library Manager
+---------------------
+\nWhat would you like to do?
+
+\nView
+1. Search papers
+
+\nModification
+2. Add paper
+3. Remove paper
+4. Update paper
+
+\nFile
+5. Quit
+
+\nChoice: """
+
+```
+
+### File i/o functions
+
+```{python}
+
+# ---------------------------------------
+# file i/o functions
+# ---------------------------------------
+def generate_papers():
+    """Generate data for a set of hypothetical research papers."""
+    # initialize list
+    papers = []
+    # loop through two lists simulataneously
+    for id, title in zip(IDS, RESEARCH_PAPER_TITLES):
+        # add dict as item in the list
+        papers.append(
+            {
+                "id": id,
+                "title": title,
+                # convert to dict to remove duplicate author names (just a quirk of randomly generating names)
+                "author": list(
+                    {
+                        "".join(random.choices(string.ascii_uppercase[0:5], k=2))
+                        for _ in range(random.choice(range(1, 4)))
+                    }
+                ),
+                # random.choice() returns a single object
+                # -> if used random.choices(), it would return the one item wrapped in a list
+                "journal": random.choice(JOURNALS),
+                "year": random.choice(range(1995, 2020)),
+                "status": random.choice(STATUSES),
+                "rating": round(random.uniform(a=4, b=10), 1),
+            }
+        )
+    return papers
+
+
+def save_papers(papers, file_name):
+    """Save research papers to a JSON file."""
+    with open(file_name, mode="w") as file:
+        json.dump(papers, file, indent=4)
+
+
+def load_papers(file_name):
+    """Load research papers from a JSON file."""
+    with open(file_name, mode="r") as file:
+        papers = json.load(file)
+    return papers
+
+```
+
+### Inspection functions
+
+```{python}
+
+# ---------------------------------------
+# inspection functions
+# ---------------------------------------
+def print_papers(papers):
+    """Print the paper(s) in a readable format."""
+    # print message if nothing supplied
+    if not papers:
+        print("No papers found.")
+    # if only one paper, directly print the dict nicely
+    elif len(papers) == 1:
+        for key, value in papers[0].items():
+            print(f"{string.capwords(key)}: {value}")
+    # if more than one paper, loop through each and print dict nicely
+    else:
+        for paper in papers:
+            for key, value in paper.items():
+                print(f"{string.capwords(key)}: {value}")
+            print("-------------")
+
+
+def find_by_field(papers, field, values):
+    """Find and return all papers matching the given field and corresponding values."""
+    # convert values to list if not already
+    if not isinstance(values, list):
+        values = [values]
+    p = []
+    for paper in papers:
+        # if the value for the field is NOT a list
+        if not isinstance(paper[field], list):
+            # check equality directly
+            if any(paper[field] == value for value in values):
+                p.append(paper)
+        # if the value for the field IS a list
+        else:
+            # check to see if any of the values of interest appear in the paper's field
+            if any(value in paper[field] for value in values):
+                p.append(paper)
+    return p
+
+```
+
+### Modification functions
+
+```{python}
+
+# ---------------------------------------
+# modification functions
+# ---------------------------------------
+def add_paper(papers, new_paper):
+    """Add a new paper to the research library."""
+    # first check if paper is valid
+    validate_paper(new_paper, "new")
+    ids = []
+    # get list of current ids
+    for paper in papers:
+        ids.append(int(paper["id"][-2:]))
+    # add the next id
+    new_paper["id"] = f"paper-{(max(ids) + 1):02d}"
+    # add the new paper with assigned id to the list
+    papers.append(new_paper)
+
+
+def validate_paper(paper, validation_type):
+    """Validate that the new paper has the correct information given."""
+    # check if any missing information
+    fields = ["id", "title", "author", "journal", "year", "status", "rating"]
+    for field in fields:
+        if field not in paper:
+            # KeyError raised when try to check if dict["key"] ... for a key that is not there
+            raise KeyError(f"Please provide the missing required field: {field}.")
+    # modify data types if necessary
+    if not isinstance(paper["author"], list):
+        paper["author"] = [paper["author"]]
+    if not isinstance(paper["year"], int):
+        paper["year"] = int(paper["year"])
+    if not isinstance(paper["rating"], float):
+        paper["rating"] = float(paper["rating"])
+    # -> format rating
+    paper["rating"] = round(paper["rating"], 1)
+    # check id based on a valid validation type
+    # -> if it is a new paper, check for valid information
+    # -> if it as an update to a paper, skip check
+    if validation_type not in ("new", "update"):
+        raise ValueError("Please set validation type to `new` or `update`.")
+    elif validation_type == "new" and paper["id"] is not None:
+        raise ValueError("Please set id to `None`.")
+    if not isinstance(paper["title"], str):
+        raise TypeError("Title must be given as a string")
+    elif len(paper["title"]) == 0:
+        raise ValueError("Title must not be an empty string.")
+    # -> ensure not an empty authors list
+    if not paper["author"]:
+        raise ValueError("Please supply the author(s).")
+    # -> for sake of simplicity, let's assume the new paper must be from the set list of journals
+    if paper["journal"] not in JOURNALS:
+        raise ValueError("Please supply a valid journal.")
+    # -> just hardcode some valid years
+    if not 1950 <= paper["year"] <= 2026:
+        raise ValueError("Please supply a valid publication year.")
+    # -> need valid status
+    if paper["status"] not in STATUSES:
+        raise ValueError("Please supply a valid paper status.")
+    # -> just harcode some value ratings
+    if not 0 <= paper["rating"] <= 10:
+        raise ValueError("Rating must be between 0 and 10.")
+
+
+def remove_papers(papers, paper_ids):
+    """Remove an existing paper from the research library."""
+    # modify data types if necessary
+    if not isinstance(paper_ids, list):
+        paper_ids = [paper_ids]
+    # get list of current ids
+    ids = [paper["id"] for paper in papers]
+    for paper_id in paper_ids:
+        # check if paper_id is present
+        if paper_id not in ids:
+            raise ValueError(f"{paper_id} not found in the research library.")
+    # if so, add it to the papers to be removed
+    papers_to_remove = find_by_field(papers, "id", paper_ids)
+    for paper_to_remove in papers_to_remove:
+        papers.remove(paper_to_remove)
+
+
+def update_paper(papers, id, field, new_value):
+    """Update an existing paper in the research library with valid new information."""
+    # check if new value is appropriate
+    # -> first see if it is a valid key
+    fields = ["title", "author", "journal", "year", "status", "rating"]
+    if field not in fields:
+        # KeyError raised when try to check if dict["key"] ... for a key that is not there
+        raise KeyError(f"{field} is not a valid field.")
+    else:
+        # create copy of papers to work with temporarily and a list of the ids
+        # -> deepcopy() actually copies the individual elements
+        # -> .copy and list[:] create a shallow copy, i.e. a new list with the same first level pointers (they are just are copied)
+        # --> if change the internal object (an element), the original is altered as well
+        papers_copy = copy.deepcopy(papers)
+        ids = [paper["id"] for paper in papers]
+        # check if id is not found
+        if id not in ids:
+            raise ValueError(f"{id} not found in the research library.")
+        # loop through actual papers and papers_copy simultaneously
+        for paper, paper_temp in zip(papers, papers_copy):
+            if paper["id"] == id:
+                # attempt to validate the new value in the papers_copy version
+                # -> if it works, then set it in the actual papers too (but using the normalized new value)
+                paper_temp[field] = new_value
+                validate_paper(paper_temp, "update")
+                paper[field] = paper_temp[field]
+
+```
+
+### Application function
+
+```{python}
+
+# ---------------------------------------
+# application function
+# ---------------------------------------
+def manage_research_library(pwd, file_name, menu=MENU):
+    """Interactive console application to manage research library."""
+    # check for correct password
+    if pwd != PASSWORD:
+        print("password is not correct")
+    # continue if correct
+    else:
+        # check for loaded global strings
+        if menu is None:
+            print("Please run line setting the default value for menu.")
+        # continue if loaded
+        else:
+            # load or generate papers at the start of the application
+            try:
+                papers = load_papers(file_name)
+            except FileNotFoundError:
+                papers = generate_papers()
+                save_papers(papers, file_name)
+            # initialize item
+            choice = ""
+            while choice != "5":
+                choice = input(menu)
+                # dispatch
+                match choice:
+                    case "1":
+                        try:
+                            # convert field to lower case to normalize it
+                            field = input("Field: ").lower()
+                            values = [
+                                value.strip()
+                                for value in input(
+                                    "Value(s) (separate by comma): "
+                                ).split(",")
+                            ]
+                            # check if correct field
+                            if field not in papers[0]:
+                                raise KeyError(f"{field} is not a valid field.")
+                            # conditionally convert to integers for specific fields
+                            elif field == "year":
+                                values = [int(value) for value in values]
+                            papers_of_interest = find_by_field(papers, field, values)
+                            print_papers(papers_of_interest)
+                            # loop through each paper and print message if value not found
+                            for value in values:
+                                matches = find_by_field(papers, field, value)
+                                if not matches:
+                                    print(f"\n{value} not found in {field}s")
+                        except KeyError as error:
+                            print(error)
+                        except ValueError:
+                            print("Publication year must be an integer.")
+                        input("\nPress Enter to continue...")
+                    case "2":
+                        try:
+                            # put the inputs in the dict literal
+                            # -> functions can be anywhere values go, so here we are just using a function to get user input
+                            new_paper = {
+                                "id": None,
+                                "title": input("Title: "),
+                                "author": [
+                                    author.strip()
+                                    for author in input(
+                                        "Author(s) (separate by comma): "
+                                    ).split(",")
+                                ],
+                                "journal": input("Journal: "),
+                                "year": int(input("Publication year: ")),
+                                "status": input("Status: "),
+                                "rating": float(input("Rating: ")),
+                            }
+                            add_paper(papers, new_paper)
+                            save_papers(papers, file_name)
+                            print(f"{new_paper['id']} added to the research library.")
+                        except (ValueError, KeyError, TypeError) as error:
+                            print(error)
+                        input("\nPress Enter to continue...")
+                    case "3":
+                        try:
+                            paper_ids = [
+                                paper_id.strip()
+                                for paper_id in input(
+                                    "Paper ID(s) to remove (separate by comma): "
+                                ).split(",")
+                            ]
+                            remove_papers(papers, paper_ids)
+                            save_papers(papers, file_name)
+                            print(
+                                f"Removed {len(paper_ids)} paper(s) from the research library."
+                            )
+                        except ValueError as error:
+                            print(error)
+                        input("\nPress Enter to continue...")
+                    case "4":
+                        try:
+                            paper_id = input("Paper ID: ")
+                            field = input("Field to update: ").lower()
+                            new_value = input("New value: ")
+                            # noramlize inputs
+                            if field == "year":
+                                new_value = int(new_value)
+                            elif field == "rating":
+                                new_value = float(new_value)
+                            elif field == "author":
+                                new_value = [
+                                    author.strip() for author in new_value.split(",")
+                                ]
+                            update_paper(
+                                papers, paper_id, field=field, new_value=new_value
+                            )
+                            save_papers(papers, file_name)
+                            print(f"{paper_id} updated successfully.")
+                        except (KeyError, ValueError, TypeError) as error:
+                            print(error)
+                        input("\nPress Enter to continue...")
+                    case "5":
+                        print("Goodbye!")
+                    # else choice
+                    case _:
+                        print("Invalid choice.")
+                        input("\nPress Enter to continue...")
+
+```
+
+### Manage research library
+
+```{python}
+#| eval: false
+
+# ---------------------------------------
+# manage research library
+# ---------------------------------------
+# NOT RUN!!! interactive console application
+manage_research_library(PASSWORD, "files/research-library.json")
+
+```
+
+```{python}
+
+# generate research library
+data_papers = generate_papers()
+
+# view sample
+print_papers(find_by_field(data_papers, "id", ["paper-01", "paper-02", "paper-15"]))
+
+```

@@ -9,7 +9,8 @@ book:
   cover-image: learning-python.png
   chapters:
     - index.qmd
-    - projects.qmd
+    - 1-gradebook.qmd
+    - 2-research-library.qmd
 
 jupyter: python3
         
