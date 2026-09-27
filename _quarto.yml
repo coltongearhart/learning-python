@@ -12,7 +12,7 @@ book:
     - 1-gradebook.qmd
     - 2-research-library.qmd
 
-jupyter: python3
+jupyter: learning-python
         
 format:
   html:
